@@ -5,7 +5,7 @@
 <h1 align="center"> Telegram UsenetBot </h1>
 <p align="center">
 <img src="https://img.shields.io/github/stars/sanjit-sinha/Tg-UsenetBot">
-<img src="https://img.shields.io/github/forks/sanjit-sinha/Tg-UsenetBot ">
+<img src="https://img.shields.io/github/forks/sanjit-sinha/Tg-UsenetBot">
 <img src="https://img.shields.io/github/repo-size/sanjit-sinha/Tg-UsenetBot">
 <img src="https://img.shields.io/badge/License-MIT-green.svg">
 <img src="https://www.repostatus.org/badges/latest/active.svg">
@@ -110,7 +110,7 @@ Any kind of feedback, bug reports, or contributions is greatly appreciated! :)
 </div>
 <br>
   
-* copyright (C) 2022 by [Sanjit sinha](https://github.com/sanjit-sinha)
+* copyright (C) 2023 by [Sanjit sinha](https://github.com/sanjit-sinha)
 * Licensed under the terms of the [The MIT License](https://github.com/sanjit-sinha/Telegram-Bot-Boilerplate/blob/main/LICENSE)
 
 -------
