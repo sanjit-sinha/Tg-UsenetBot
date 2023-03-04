@@ -1,4 +1,5 @@
 import re
+import 
 import asyncio
 import requests 
 
@@ -148,16 +149,18 @@ async def grabid(client: Client, message: Message):
     	
     replymsg  = await message.reply_text("Adding your requested ID(s). Please Wait...",  quote=True)
     
-    success_taskids= []
+    success_taskids = []
     for id in nzbhydra_idlist:
-       nzburl = NZBHYDRA_URL_ENDPOINT.replace("replace_id", id)
-       response = requests.head(nzburl)       
-       
-       if "content-disposition" in response.headers:
-       	result = await usenetbot.add_nzburl(nzburl)       	
-       	
-       	if result["status"]:
-       		success_taskids.append(result["nzo_ids"][0])
+        nzburl = NZBHYDRA_URL_ENDPOINT.replace("replace_id", id)
+        async with httpx.AsyncClient() as client:
+        	response = await client.head(nzburl)
+        
+        if "Content-Disposition" in response.headers:
+        	result = usenetbot.add_nzburl(nzburl)
+        
+        if result["status"]:
+        	success_taskids.append(result['nzo_ids'][0])
+
        		
     if success_taskids:
         sabnzbd_userid_log.setdefault(userid, []).extend(success_taskids)
