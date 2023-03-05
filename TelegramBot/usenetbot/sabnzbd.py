@@ -36,7 +36,7 @@ class UsenetBot:
     	self.__completed_block_ascii = "▰"
     	    	
     	self.SABNZBD_API = f"{SABNZBD_ENDPOINT}&output=json"
-    	self.client = requests.Session()
+    	self.client =  httpx.AsyncClient()
 
   	    	
     def footer_message(self, speed=None):
@@ -98,7 +98,7 @@ class UsenetBot:
     	for index, history in enumerate(history_list):
     	    if history["status"] not in ["Completed", "Failed"]:
     	    	msg = f"**📂 FileName :** __{history['name']}__\n"
-    	    	
+    	    	msg += f"**Status:** {queue['status']} | **ETA:** {queue['timeleft']}\n"
     	    	action= history.get('action_line', None)
     	    	if isinstance(action, list) and action_line:	
     	    		msg += f"**Action:** {action[0]}\n"
