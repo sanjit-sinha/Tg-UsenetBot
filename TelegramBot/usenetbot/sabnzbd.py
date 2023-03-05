@@ -117,12 +117,14 @@ class UsenetBot:
 	  	  	  	  
 	  	  	  	  
     async def check_task(self, task_id):
-        response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'nzo_ids': task_id}).json() 
+        response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'nzo_ids': task_id})
+        response = response.json()
         return bool(response["queue"]["slots"])
 
                 
     async def get_task(self, task_id):
-        response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'nzo_ids': task_id}).json() 
+        response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'nzo_ids': task_id})
+        response = response.json()
         return bool(response["queue"]["slots"])     
         
                 	    	   	    	            	    	   	    	    
@@ -130,12 +132,13 @@ class UsenetBot:
     	isValidTaskID =await self.check_task(task_id)
     	if not isValidTaskID: return False
     	
-    	return await self.client.get(self.SABNZBD_API, 
-    	       params={'mode':'queue', 'name':'resume', 'value': task_id}).json()
+    	response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'name':'resume', 'value': task_id})
+    	return response.json()  
 
     	           	       
     async def resumeall_task(self):
-        response =await self.client.get(self.SABNZBD_API, params={'mode':'resume'}).json() 
+        response =await self.client.get(self.SABNZBD_API, params={'mode':'resume'})
+        response = response.json()        
         return response["status"]
  
         	                            	                           	                            	                    
@@ -143,25 +146,26 @@ class UsenetBot:
     	isValidTaskID = self.check_task(task_id)
     	if not isValidTaskID: return False
     	    	
-    	return await self.client.get(self.SABNZBD_API, 
-    	       params={'mode':'queue', 'name':'pause', 'value': task_id}).json()
-
+    	response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'name':'pause', 'value': task_id})
+    	return response.json()
     	           	       
     async def pauseall_task(self):
-        response = self.client.get(self.SABNZBD_API, params={'mode':'pause'}).json()
+        response = self.client.get(self.SABNZBD_API, params={'mode':'pause'})
+        response = response.json()        
         return response["status"]      
 
         	        	
     async def delete_task(self, task_id):
     	isValidTaskID = self.check_task(task_id)
     	if not isValidTaskID: return False
-    	    	
-    	return await self.client.get(self.SABNZBD_API, 
-    	       params={'mode':'queue', 'name':'delete', 'value': task_id}).json()
+    	
+    	response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'name':'delete', 'value': task_id})
+    	return response.json()   	       
     
     	       	       
     async def deleteall_task(self):
-        response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'name':'delete', 'value':'all'}).json()
+        response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'name':'delete', 'value':'all'})
+        response = response.json()        
         return response["status"]
 
 
