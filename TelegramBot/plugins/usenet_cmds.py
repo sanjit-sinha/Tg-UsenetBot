@@ -128,7 +128,7 @@ class UsenetBot:
     	isValidTaskID =await self.check_task(task_id)
     	if not isValidTaskID: return False
     	
-    	return self.client.get(self.SABNZBD_API, 
+    	return await self.client.get(self.SABNZBD_API, 
     	       params={'mode':'queue', 'name':'resume', 'value': task_id}).json()
 
     	           	       
@@ -141,7 +141,7 @@ class UsenetBot:
     	isValidTaskID = self.check_task(task_id)
     	if not isValidTaskID: return False
     	    	
-    	return self.client.get(self.SABNZBD_API, 
+    	return await self.client.get(self.SABNZBD_API, 
     	       params={'mode':'queue', 'name':'pause', 'value': task_id}).json()
 
     	           	       
@@ -154,12 +154,12 @@ class UsenetBot:
     	isValidTaskID = self.check_task(task_id)
     	if not isValidTaskID: return False
     	    	
-    	return self.client.get(self.SABNZBD_API, 
+    	return await self.client.get(self.SABNZBD_API, 
     	       params={'mode':'queue', 'name':'delete', 'value': task_id}).json()
     
     	       	       
     async def deleteall_task(self):
-        response = self.client.get(self.SABNZBD_API, params={'mode':'queue', 'name':'delete', 'value':'all'}).json()
+        response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'name':'delete', 'value':'all'}).json()
         return response["status"]
 
 
@@ -171,13 +171,13 @@ class UsenetBot:
         
         payload = {'nzbfile': (path_name.split("/")[-1], nzb_content) }  
         params = {'mode':'addfile'}
-        response = self.client.post(self.SABNZBD_API, params=params ,files=payload)
+        response = await self.client.post(self.SABNZBD_API, params=params ,files=payload)
         return response.json()
 
 
     async def add_nzburl(self, nzburl):
         params = {'mode':'addurl', "name":nzburl}
-        response = self.client.post(self.SABNZBD_API, params=params)
+        response = await self.client.post(self.SABNZBD_API, params=params)
         return response.json()      	        	      	        	
 
       	     	    	    	     	    	    	                	     	    	    	     	    	    	          
