@@ -13,7 +13,6 @@ from TelegramBot.helpers.filters import check_auth, sudo_cmd
 
 sabnzbd_userid_log: dict = {} #saves userid of user along with his task id. {userid:[task1, task2]}
     
-    
 usenetbot = UsenetBot () 
 @Client.on_message(filters.command("pstatus") & check_auth)
 async def downloading_status(client: Client, message: Message):
@@ -30,15 +29,15 @@ async def sudo_cmds(client: Client, message: Message):
     
     command = message.command[0]    
     if command == "resumeall":
-    	if usenetbot.resumeall_task():
+    	if await usenetbot.resumeall_task():
             return await message.reply_text("Resumed all Task successfully.", quote= True)
           
     elif command == "pauseall":
-    	if usenetbot.pauseall_task():
+    	if await usenetbot.pauseall_task():
             return await message.reply_text("Paused all Task successfully.", quote=True)
             
     elif command == "cancelall":
-    	if usenetbot.deleteall_task():
+    	if await usenetbot.deleteall_task():
             return await message.reply_text("Cancelled all Task successfully.", quote=True)
             
     return await message.reply_text("something went wrong.", quote=True)    
@@ -58,7 +57,7 @@ async def resume_task(client: Client, message: Message):
     	if user_input not in sabnzbd_userid_log[user_id]:
     		return await message.reply_text("No Task found with that Task ID under your User ID.", quote=True)
     	
-    result = usenetbot.resume_task(task_id=user_input)
+    result = await usenetbot.resume_task(task_id=user_input)
     if result:
     	return await message.reply_text(f"Task {user_input} successfully resumed.", quote=True)
     else: return await message.reply_text("No Task found with that Task ID .", quote=True)
@@ -78,7 +77,7 @@ async def pause_task(client: Client, message: Message):
     	if user_input not in sabnzbd_userid_log[user_id]:
     		return await message.reply_text("No Task found with that Task ID under your User ID.", quote=True)
     	
-    result = usenetbot.pause_task(task_id=user_input)
+    result =await usenetbot.pause_task(task_id=user_input)
     if result:
     	return await message.reply_text(f"Task {user_input} successfully paused.", quote=True)
     else: return await message.reply_text("No Task found with that Task ID .", quote=True)
@@ -99,7 +98,7 @@ async def delete_task(client: Client, message: Message):
     	if user_input not in sabnzbd_userid_log[user_id]:
     		return await message.reply_text("No Task found with that Task ID under your User ID.", quote=True)
     	
-    result = usenetbot.delete_task(task_id=user_input)
+    result = await usenetbot.delete_task(task_id=user_input)
     if result:
     	return await message.reply_text(f"Task {user_input} successfully deleted.", quote=True)
     	
@@ -135,7 +134,7 @@ async def nzbmirror(client: Client, message: Message):
 
         
 @Client.on_message(filters.command(["nzbgrab", "nzbadd"]) & check_auth)
-async def nzbgrab(client: Client, message: Message):
+async def grabid(client: Client, message: Message):
     
     userid = message.from_user.id 
     if len(message.command) < 2:
