@@ -154,7 +154,7 @@ async def grabid(client: Client, message: Message):
         response = requests.head(nzburl)
         
         if "Content-Disposition" in response.headers:
-        	result = usenetbot.add_nzburl(nzburl)
+        	result = await usenetbot.add_nzburl(nzburl)
         
         if result["status"]:
         	success_taskids.append(result['nzo_ids'][0])
