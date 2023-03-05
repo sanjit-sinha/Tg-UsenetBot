@@ -34,7 +34,7 @@ _____
  
 **More about Usenet : [IITK Article](http://www.iitk.ac.in/LDP/HOWTO/Usenet-News-HOWTO/x27.html) • [Basic Guide](https://graph.org/EVERYTHING-YOU-NEED-TO-KNOW-ABOUT-USENET-09-04) • [Usenet Reddit wiki](https://www.reddit.com/r/usenet/wiki/index/)**
 
-***Note: This bot doesn't download any NZB files or content. It simply interacts with various APIs such as Sabnzbd and NZBGet to display progress and allow user to control them via Telegram.***
+***Note: This bot doesn't download any NZB files or content. It simply interacts with various APIs such as Sabnzbd and NZBHydra to display progress and allow user to control them via Telegram.***
 
 ____
 
