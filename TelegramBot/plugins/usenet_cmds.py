@@ -154,7 +154,7 @@ async def grabid(client: Client, message: Message):
         async with httpx.AsyncClient() as client:
         	response = await client.head(nzburl)
         
-        if "Content-Disposition" in response.headers:
+        if "Content-Disposition" in await response.headers:
         	result = usenetbot.add_nzburl(nzburl)
         
         if result["status"]:
