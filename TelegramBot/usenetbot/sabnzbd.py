@@ -24,7 +24,6 @@ downloading_status_chatids = {} #saves chatid where downloading status page is a
 postprocess_status_chatids = {} #saves chatid where postprocessing status page is active. 
 	
 	
-from datetime import  datetime 
 class UsenetBot:
 	
     def __init__(self):
@@ -54,10 +53,11 @@ class UsenetBot:
     	return msg
     	 
     	    	    	    	    	   	    	    	    	
-    def downloading_status_page(self):        
+    async def downloading_status_page(self):        
 	    """Generate status page for downloading progress message."""
 	    
-	    response = self.client.get(self.SABNZBD_API, params={'mode':'queue'}).json()
+	    response = await self.client.get(self.SABNZBD_API, params={'mode':'queue'})
+	    response = response.json()
 	    if not response["queue"]["slots"]: return None  
 	    
 	    queue_list = response["queue"]["slots"]
@@ -86,10 +86,11 @@ class UsenetBot:
 	    status_page += self.footer_message(response["queue"]["speed"])
 	    return status_page
 	    
-    def postprocessing_status_page(self):
+    async def postprocessing_status_page(self):
     	"""Generate status page for postprocessing progress message."""
     	
-    	response = self.client.get(self.SABNZBD_API, params={'mode':'history'}).json()
+    	response = await self.client.get(self.SABNZBD_API, params={'mode':'history'})
+    	response = response.json()
     	if not response["history"]["slots"]: return None
     	
     	history_list = response["history"]["slots"]
@@ -99,7 +100,6 @@ class UsenetBot:
     	    if history["status"] not in ["Completed", "Failed"]:
     	    	msg = f"**📂 FileName :** __{history['name']}__\n"
     	    	msg += f"**Status :** __{history['status']}__\n"
-    	    	msg += f"**Status:** {queue['status']} | **ETA:** {queue['timeleft']}\n"
     	    	action= history.get('action_line', None)
     	    	if isinstance(action, list) and action_line:	
     	    		msg += f"**Action:** {action[0]}\n"
@@ -116,52 +116,56 @@ class UsenetBot:
     	return status_page
 	  	  	  	  
 	  	  	  	  
-    def check_task(self, task_id):
-        response = self.client.get(self.SABNZBD_API, params={'mode':'queue', 'nzo_ids': task_id}).json() 
+    async def check_task(self, task_id):
+        response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'nzo_ids': task_id})
+        response = response.json()
         return bool(response["queue"]["slots"])
 
                 
-    def get_task(self, task_id):
-        response = self.client.get(self.SABNZBD_API, params={'mode':'queue', 'nzo_ids': task_id}).json() 
+    async def get_task(self, task_id):
+        response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'nzo_ids': task_id})
+        response = response.json()
         return bool(response["queue"]["slots"])     
         
                 	    	   	    	            	    	   	    	    
-    def resume_task(self, task_id):
-    	isValidTaskID = self.check_task(task_id)
+    async def resume_task(self, task_id):
+    	isValidTaskID =await self.check_task(task_id)
     	if not isValidTaskID: return False
     	
-    	return self.client.get(self.SABNZBD_API, 
-    	       params={'mode':'queue', 'name':'resume', 'value': task_id}).json()
+    	response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'name':'resume', 'value': task_id})
+    	return response.json()  
 
     	           	       
-    def resumeall_task(self):
-        response = self.client.get(self.SABNZBD_API, params={'mode':'resume'}).json() 
+    async def resumeall_task(self):
+        response =await self.client.get(self.SABNZBD_API, params={'mode':'resume'})
+        response = response.json()        
         return response["status"]
  
         	                            	                           	                            	                    
-    def pause_task(self, task_id):
-    	isValidTaskID = self.check_task(task_id)
+    async def pause_task(self, task_id):
+    	isValidTaskID = await self.check_task(task_id)
     	if not isValidTaskID: return False
     	    	
-    	return self.client.get(self.SABNZBD_API, 
-    	       params={'mode':'queue', 'name':'pause', 'value': task_id}).json()
-
+    	response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'name':'pause', 'value': task_id})
+    	return response.json()
     	           	       
-    def pauseall_task(self):
-        response = self.client.get(self.SABNZBD_API, params={'mode':'pause'}).json()
+    async def pauseall_task(self):
+        response = self.client.get(self.SABNZBD_API, params={'mode':'pause'})
+        response = response.json()        
         return response["status"]      
 
         	        	
-    def delete_task(self, task_id):
-    	isValidTaskID = self.check_task(task_id)
+    async def delete_task(self, task_id):
+    	isValidTaskID = await self.check_task(task_id)
     	if not isValidTaskID: return False
-    	    	
-    	return self.client.get(self.SABNZBD_API, 
-    	       params={'mode':'queue', 'name':'delete', 'value': task_id}).json()
+    	
+    	response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'name':'delete', 'value': task_id})
+    	return response.json()   	       
     
     	       	       
-    def deleteall_task(self):
-        response = self.client.get(self.SABNZBD_API, params={'mode':'queue', 'name':'delete', 'value':'all'}).json()
+    async def deleteall_task(self):
+        response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'name':'delete', 'value':'all'})
+        response = response.json()        
         return response["status"]
 
 
@@ -173,13 +177,13 @@ class UsenetBot:
         
         payload = {'nzbfile': (path_name.split("/")[-1], nzb_content) }  
         params = {'mode':'addfile'}
-        response = self.client.post(self.SABNZBD_API, params=params ,files=payload)
+        response = await self.client.post(self.SABNZBD_API, params=params ,files=payload)
         return response.json()
 
 
     async def add_nzburl(self, nzburl):
         params = {'mode':'addurl', "name":nzburl}
-        response = self.client.post(self.SABNZBD_API, params=params)
+        response = await self.client.post(self.SABNZBD_API, params=params)
         return response.json()      	        	      	        	
 
       	     	    	    	     	    	    	                	     	    	    	     	    	    	          
@@ -206,18 +210,18 @@ class UsenetBot:
     		await self.clear_progresstask(status_message, chat_id,  progress="downloading")
     		    			   			    			    			    		
     	# Get the status page
-    	status_page = self.downloading_status_page()    	    	    	
+    	status_page = await self.downloading_status_page()    	    	    	
     	if not status_page:
             return await client.send_message(chat_id, "No ongoing task currently." , reply_to_message_id=message.id)
     		     	
     	# Send the status message and start the job to update the downloading status message after x interval.
-    	status_message=await client.send_message(chat_id, status_page, reply_to_message_id=message.id)
+    	status_message= await client.send_message(chat_id, status_page, reply_to_message_id=message.id)
     	downloading_status_chatids[chat_id] = status_message.id
     
     	async def edit_status_message():
     		"""Edit the status message  after x seconds."""
     				
-    		status_page = self.downloading_status_page()
+    		status_page = await self.downloading_status_page()
     		if not status_page:
     			return await self.clear_progresstask(status_message, chat_id,  progress="downloading")
     			
@@ -237,18 +241,18 @@ class UsenetBot:
     		await self.clear_progresstask(status_message, chat_id,  progress="postprocessing")
     		    			   			    			    			    		
     	# Get the status page
-    	status_page = self.postprocessing_status_page()    	    	    	
+    	status_page = await self.postprocessing_status_page()    	    	    	
     	if not status_page:
     		return await client.send_message(chat_id, "No ongoing post processing task found." , reply_to_message_id=message.id)
     		     	
     	# Send the status message and start the job to update the postprocessing status message after x interval.
-    	status_message=await client.send_message(chat_id, status_page, reply_to_message_id=message.id)
+    	status_message= await client.send_message(chat_id, status_page, reply_to_message_id=message.id)
     	postprocess_status_chatids[chat_id] = status_message.id
     
     	async def edit_status_message():
     		"""Edit the status message  after x seconds."""
     				
-    		status_page = self.postprocessing_status_page()	
+    		status_page = await self.postprocessing_status_page()	
     		if not status_page:
     		    return await self.clear_progresstask(status_message, chat_id,  progress="postprocessing")
     				    			    						
@@ -257,5 +261,3 @@ class UsenetBot:
     			return await self.clear_progresstask(status_message, chat_id,  progress="postprocessing")
     			
     	scheduler.add_job(edit_status_message, "interval", seconds=10, misfire_grace_time=15,max_instances=2, id=f"postprocessing_{str(chat_id)}")
-     
-                                    
