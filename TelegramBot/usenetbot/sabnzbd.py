@@ -98,7 +98,7 @@ class UsenetBot:
     	for index, history in enumerate(history_list):
     	    if history["status"] not in ["Completed", "Failed"]:
     	    	msg = f"**📂 FileName :** __{history['name']}__\n"
-    	    	
+    	    	msg += f"**Status:** {queue['status']} | **ETA:** {queue['timeleft']}\n"
     	    	action= history.get('action_line', None)
     	    	if isinstance(action, list) and action_line:	
     	    		msg += f"**Action:** {action[0]}\n"
