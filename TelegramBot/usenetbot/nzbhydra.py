@@ -1,17 +1,18 @@
+import json
+import html
+import httpx
+import requests
+import xml.etree.ElementTree as ET
+
 from TelegramBot import NZBHYDRA_ENDPOINT, NZBHYDRA_STATS_ENDPOINT 
 from TelegramBot.helpers.functions import get_readable_bytes
-
-import xml.etree.ElementTree as ET
-import requests
-import json
-import html 
 
     
 class NzbHydra:	
 	def __init__(self):		
 		self.NZBHYDRA_ENDPOINT = NZBHYDRA_ENDPOINT 
 		self.NZBHYDRA_STATS_ENDPOINT = NZBHYDRA_STATS_ENDPOINT
-		self.client = requests.Session()
+		self.client =  httpx.AsyncClient()
 		
 	def parse_xml(self, response, query):
 	    root = ET.fromstring(response)
