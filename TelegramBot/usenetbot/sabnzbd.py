@@ -143,7 +143,7 @@ class UsenetBot:
  
         	                            	                           	                            	                    
     async def pause_task(self, task_id):
-    	isValidTaskID = self.check_task(task_id)
+    	isValidTaskID = await self.check_task(task_id)
     	if not isValidTaskID: return False
     	    	
     	response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'name':'pause', 'value': task_id})
@@ -156,7 +156,7 @@ class UsenetBot:
 
         	        	
     async def delete_task(self, task_id):
-    	isValidTaskID = self.check_task(task_id)
+    	isValidTaskID = await self.check_task(task_id)
     	if not isValidTaskID: return False
     	
     	response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'name':'delete', 'value': task_id})
