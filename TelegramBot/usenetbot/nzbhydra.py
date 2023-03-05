@@ -7,7 +7,6 @@ import xml.etree.ElementTree as ET
 from TelegramBot import NZBHYDRA_ENDPOINT, NZBHYDRA_STATS_ENDPOINT 
 from TelegramBot.helpers.functions import get_readable_bytes
 
-
     
 class NzbHydra:	
 	def __init__(self):		
