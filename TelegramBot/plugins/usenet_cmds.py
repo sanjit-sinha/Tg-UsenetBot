@@ -255,5 +255,3 @@ class UsenetBot:
     			return await self.clear_progresstask(status_message, chat_id,  progress="postprocessing")
     			
     	scheduler.add_job(edit_status_message, "interval", seconds=10, misfire_grace_time=15,max_instances=2, id=f"postprocessing_{str(chat_id)}")
-     
-                                    
