@@ -56,7 +56,8 @@ class UsenetBot:
     async def downloading_status_page(self):        
 	    """Generate status page for downloading progress message."""
 	    
-	    response = await self.client.get(self.SABNZBD_API, params={'mode':'queue'}).json()
+	    response = await self.client.get(self.SABNZBD_API, params={'mode':'queue'})
+	    response = response.json()
 	    if not response["queue"]["slots"]: return None  
 	    
 	    queue_list = response["queue"]["slots"]
@@ -88,7 +89,8 @@ class UsenetBot:
     async def postprocessing_status_page(self):
     	"""Generate status page for postprocessing progress message."""
     	
-    	response = await self.client.get(self.SABNZBD_API, params={'mode':'history'}).json()
+    	response = await self.client.get(self.SABNZBD_API, params={'mode':'history'})
+    	response = response.json()
     	if not response["history"]["slots"]: return None
     	
     	history_list = response["history"]["slots"]
