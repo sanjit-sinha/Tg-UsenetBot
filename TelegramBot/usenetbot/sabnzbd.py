@@ -116,7 +116,7 @@ class UsenetBot:
 		    	
 		    
 		status_page += "━━━━━━━━━━━━━━━━━━━━━\n"	
-		status_page += 1
+		status_page += "ok"
 		return status_page
 
 	async def postprocessing_status_page(self):
