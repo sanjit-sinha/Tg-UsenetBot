@@ -79,7 +79,7 @@ class UsenetBot:
 			    if re.search(r"(http|https)", file_name):
 			    	file_name = "Adding file from ID."
 			    
-			    status_page += f"**🗂 FileName:** {file_name}\n"
+			    status_page += f"**🗂 FileName:** __{file_name}__\n"
 			    status_page += f"**{queue['percentage']}%**  `[{self.__completed_block_ascii * filled_blocks}{self.__remaining_block_ascii * unfilled_blocks}]`\n"
 			    status_page += f"**{queue['sizeleft']}** __remaining of__ **{queue['size']}**\n"
 			    status_page += f"**Status:** {queue['status']} | **ETA:** {queue['timeleft']}\n"
@@ -94,7 +94,7 @@ class UsenetBot:
 		    status_page += "**Post Processing -\n\n**"
 		    
 		    for index, history in enumerate(postprocessing_queue_list):
-		        status_page += f"**🗂 FileName :** {history['name']}\n"
+		        status_page += f"**🗂 FileName :** __{history['name']}__\n"
 		        status_page += f"**Status :** __{history['status']}__\n"
 		        
 		        action = history.get('action_line')
@@ -135,7 +135,7 @@ class UsenetBot:
 						action = action.replace("Running script:", "")
 					msg += f"**Action :** __{action.strip()}__\n"
 
-				msg+= "\n"
+				msg+= "\n\n"
 				status_page += msg
 
 		if status_page: status_page += self.footer_message()
