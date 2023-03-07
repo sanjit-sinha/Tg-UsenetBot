@@ -40,21 +40,20 @@ class UsenetBot:
 
 
 	def footer_message(self, speed=None):
-	       
-        #calculating system speed.
-        net_io_counters = psutil.net_io_counters()
-        bytes_sent = net_io_counters.bytes_sent
-        bytes_recv = net_io_counters.bytes_recv
-
-        time.sleep(1)
-
-        net_io_counters = psutil.net_io_counters()
-        download_speed = net_io_counters.bytes_recv - bytes_recv
-        upload_speed = net_io_counters.bytes_sent - bytes_sent
-                
-		botuptime = get_readable_time(timefunc() - BotStartTime)
-		msg = f"**🔘 DL-Speed: {get_readable_bytes(download_speed)} 🔘 UL-Speed: {get_readable_bytes(upload_speed)}  "
-		return msg
+	    #calculating system speed per seconds.
+	    net_io_counters = psutil.net_io_counters()
+	    bytes_sent = net_io_counters.bytes_sent
+	    bytes_recv = net_io_counters.bytes_recv
+	    
+	    time.sleep(1)
+	    
+	    net_io_counters = psutil.net_io_counters()
+	    download_speed = net_io_counters.bytes_recv - bytes_recv
+	    upload_speed = net_io_counters.bytes_sent - bytes_sent
+	    
+	    botuptime = get_readable_time(timefunc() - BotStartTime)
+	    msg = f"**🔘 DL-Speed: {get_readable_bytes(download_speed)} 🔘 UL-Speed: {get_readable_bytes(upload_speed)}"
+	    return msg
 	
 	async def downloading_status_page(self):
 		"""Generate status page for downloading progress message."""
