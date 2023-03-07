@@ -1,6 +1,7 @@
 import re
 import time
 import httpx
+import psutil 
 import aiofiles
 import asyncio
 import requests
@@ -39,16 +40,20 @@ class UsenetBot:
 
 
 	def footer_message(self, speed=None):
-		botuptime = get_readable_time(timefunc() - BotStartTime)
-		total, used, free = disk_usage(".")
-		free_space = get_readable_bytes(free)
-		total_space = get_readable_bytes(total)
-		cpu_usage= f"{cpu_percent()}%"
-		ram_usage= f"{virtual_memory().percent}%"
+	       
+        #calculating system speed.
+        net_io_counters = psutil.net_io_counters()
+        bytes_sent = net_io_counters.bytes_sent
+        bytes_recv = net_io_counters.bytes_recv
 
-		msg = f"CPU: {cpu_usage} | RAM: {ram_usage}  \n"
-		msg += f"Total: {total_space} | Free: {free_space}\n"
-		msg += f"UPTIME: {botuptime} | DL-Speed: {speed}\n"
+        time.sleep(1)
+
+        net_io_counters = psutil.net_io_counters()
+        download_speed = net_io_counters.bytes_recv - bytes_recv
+        upload_speed = net_io_counters.bytes_sent - bytes_sent
+                
+		botuptime = get_readable_time(timefunc() - BotStartTime)
+		msg = f"**🔘 DL-Speed: {get_readable_bytes(download_speed)} 🔘 UL-Speed: {get_readable_bytes(upload_speed)}  "
 		return msg
 	
 	async def downloading_status_page(self):
