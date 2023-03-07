@@ -104,7 +104,8 @@ class UsenetBot:
 		        
 		        if index == 4 and len(postprocessing_queue_list) > 4:
 		            status_page += f"➕ Extra Queued Task...\n\n"
-		            break
+		            break		            
+		        msg+= "\n"
 		            
 		if status_page:
 		    status_page += "━━━━━━━━━━━━━━━━━━━━━\n"
@@ -135,7 +136,7 @@ class UsenetBot:
 						action = action.replace("Running script:", "")
 					msg += f"**Action :** __{action.strip()}__\n"
 
-				msg+= "\n\n"
+
 				status_page += msg
 
 		if status_page: status_page += self.footer_message()
