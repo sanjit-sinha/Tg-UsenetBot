@@ -88,13 +88,12 @@ class UsenetBot:
 			    if index == 4 and len(downloading_queue_list) > 4:
 			        status_page += f"➕ {max(len(downloading_queue_list)-4, 0)} Ongoing Task...\n\n"
 			        break
-			        
-		if status_page:
-			status_page += "━━━━━━━━━━━━━━━━━━━━━\n"
-			
+
 		if postprocessing_queue_list:
-		    status_page += "**Post Processing -\n\n**"
-		    
+		    if status_page:
+		    	status_page += "━━━━━━━━━━━━━━━━━━━━━\n"
+			
+		    status_page += "**Post Processing -\n\n**"		    
 		    for index, history in enumerate(postprocessing_queue_list):
 		        status_page += f"**🗂 FileName :** __{history['name']}__\n"
 		        status_page += f"**Status :** __{history['status']}__\n"
