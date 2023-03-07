@@ -105,7 +105,7 @@ class UsenetBot:
 		        if index == 4 and len(postprocessing_queue_list) > 4:
 		            status_page += f"➕ Extra Queued Task...\n\n"
 		            break		            
-		        status_msg+= "\n"
+		        status_page += "\n"
 		            
 		if status_page:
 		    status_page += "━━━━━━━━━━━━━━━━━━━━━\n"
