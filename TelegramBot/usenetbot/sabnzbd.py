@@ -69,7 +69,7 @@ class UsenetBot:
 		status_page = ""
 		
 		if downloading_queue_list:
-			status_page += "**❇ Downloading -\n\n**"
+			status_page += "**Downloading -\n\n**"
 			
 			for index, queue in enumerate(downloading_queue_list):
 			    filled_blocks = round(int(queue['percentage']) * self.__number_of_blocks / 100)
@@ -79,7 +79,7 @@ class UsenetBot:
 			    if re.search(r"(http|https)", file_name):
 			    	file_name = "Adding file from ID."
 			    
-			    status_page += f"**🗂 FileName:** __{file_name}__\n"
+			    status_page += f"**🗂 FileName:** {file_name}\n"
 			    status_page += f"**{queue['percentage']}%**  `[{self.__completed_block_ascii * filled_blocks}{self.__remaining_block_ascii * unfilled_blocks}]`\n"
 			    status_page += f"**{queue['sizeleft']}** __remaining of__ **{queue['size']}**\n"
 			    status_page += f"**Status:** {queue['status']} | **ETA:** {queue['timeleft']}\n"
@@ -91,10 +91,10 @@ class UsenetBot:
 			        
 		if postprocessing_queue_list:
 		    status_page += "━━━━━━━━━━━━━━━━━━━━━\n"
-		    status_page += "**✴ Post Processing -\n\n**"
+		    status_page += "**Post Processing -\n\n**"
 		    
 		    for index, history in enumerate(postprocessing_queue_list):
-		        status_page += f"**🗂 FileName :** __{history['name']}__\n"
+		        status_page += f"**🗂 FileName :** {history['name']}\n"
 		        status_page += f"**Status :** __{history['status']}__\n"
 		        
 		        action = history.get('action_line')
