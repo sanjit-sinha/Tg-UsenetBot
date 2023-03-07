@@ -116,7 +116,7 @@ class UsenetBot:
 		    	
 		    
 		status_page += "━━━━━━━━━━━━━━━━━━━━━\n"	
-		status_page += self.footer_message(response["queue"]["speed"])
+		status_page += 1
 		return status_page
 
 	async def postprocessing_status_page(self):
