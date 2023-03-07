@@ -63,6 +63,7 @@ class UsenetBot:
 		try:
 		    postprocessing_response = await self.client.get(self.SABNZBD_API, params={'mode': 'history'})
 		    postprocessing_queue_list = [slot for slot in postprocessing_response.json()['history']['slots'] if slot['status'] not in ['Completed', 'Failed']]
+		    postprocessing_queue_list.reverse()
 		except:
 			postprocessing_queue_list = []
 		
@@ -86,12 +87,12 @@ class UsenetBot:
 			    status_page += f"**Task ID:** `{queue['nzo_id']}`\n\n"
 			    
 			    if index == 4 and len(downloading_queue_list) > 4:
-			        status_page += f"➕ {max(len(downloading_queue_list)-4, 0)} Ongoing Task...\n\n"
+			        status_page += f"**+ {max(len(downloading_queue_list)-4, 0)} Ongoing Task...**\n\n"
 			        break
 
 		if postprocessing_queue_list:
 		    if status_page:
-		    	status_page += "━━━━━━━━━━━━━━━━━━━━━\n"
+		    	status_page += "━━━━━━━━━━━━━━━━━━━━\n"
 			
 		    status_page += "**Post Processing -\n\n**"		    
 		    for index, history in enumerate(postprocessing_queue_list):
@@ -107,12 +108,12 @@ class UsenetBot:
 		            status_page += f"**Action :** __{action.strip()}__\n"
     	    	    
 		        if index == 4 and len(postprocessing_queue_list) > 4:
-		            status_page += f"➕ Extra Queued Task...\n\n"
+		            status_page += f"\n**+ Extra Queued Task...**\n\n"
 		            break
 		        status_page += "\n"
 		            
 		if status_page:
-		    status_page += "━━━━━━━━━━━━━━━━━━━━━\n"
+		    status_page += "━━━━━━━━━━━━━━━━━━━━\n"
 		    status_page += self.footer_message()
 		return status_page
     
