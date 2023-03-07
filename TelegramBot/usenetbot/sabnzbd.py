@@ -46,7 +46,6 @@ class UsenetBot:
 		cpu_usage= f"{cpu_percent()}%"
 		ram_usage= f"{virtual_memory().percent}%"
 
-		msg = "━━━━━━━━━━━━━━━━━━━━\n"
 		msg += f"CPU: {cpu_usage} | RAM: {ram_usage}  \n"
 		msg += f"Total: {total_space} | Free: {free_space}\n"
 		msg += f"UPTIME: {botuptime} | DL-Speed: {speed}\n"
