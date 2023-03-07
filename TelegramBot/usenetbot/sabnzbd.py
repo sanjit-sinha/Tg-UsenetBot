@@ -141,7 +141,6 @@ class UsenetBot:
 						action = action.replace("Running script:", "")
 					msg += f"**Action :** __{action.strip()}__\n"
 
-
 				status_page += msg
 
 		if status_page: status_page += self.footer_message()
