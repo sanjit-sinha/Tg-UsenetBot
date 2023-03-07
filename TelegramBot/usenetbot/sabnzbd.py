@@ -51,74 +51,68 @@ class UsenetBot:
 		msg += f"Total: {total_space} | Free: {free_space}\n"
 		msg += f"UPTIME: {botuptime} | DL-Speed: {speed}\n"
 		return msg
-
-
+	
 	async def downloading_status_page(self):
 		"""Generate status page for downloading progress message."""
-				
+		
+		try:
+		    downloading_response = await self.client.get(self.SABNZBD_API, params={'mode': 'queue'})
+		    downloading_queue_list = downloading_response.json()['queue']['slots']
+		except:
+			downloading_queue_list = []
+		
+		try:
+		    postprocessing_response = await self.client.get(self.SABNZBD_API, params={'mode': 'history'})
+		    postprocessing_queue_list = [slot for slot in postprocessing_response.json()['history']['slots'] if slot['status'] not in ['Completed', 'Failed']]
+		except:
+			postprocessing_queue_list = []
+		
 		status_page = ""
-		downloading_response = await self.client.get(self.SABNZBD_API, params={'mode':'queue'})
-		downloading_response = downloading_response.json()
 		
-		downloading_queue_list = downloading_response["queue"]["slots"]		
-		number_of_downloading_task = len(downloading_queue_list)		
-												
 		if downloading_queue_list:
-			status_page += "**❇ Downloading -\n\n**"									
-													
-		for index, queue in enumerate(downloading_queue_list):
-			filled_blocks = round(int(queue['percentage']) * self.__number_of_blocks / 100)
-			unfilled_blocks = self.__number_of_blocks - filled_blocks
-
-			file_name = queue['filename']
-			if re.search(r"(http|https)", queue['filename']):
-				file_name = "Adding file from ID."
-
-			status_page += f"**🗂 FileName:** __{file_name}__\n"
-			status_page += f"**{queue['percentage']}%**  `[{self.__completed_block_ascii * filled_blocks}{self.__remaining_block_ascii * unfilled_blocks}]`\n"
-			status_page += f"**{queue['sizeleft']}** __remaining of__ **{queue['size']}**\n"
-			status_page += f"**Status:** {queue['status']} | **ETA:** {queue['timeleft']}\n"
-			status_page += f"**Task ID:** `{queue['nzo_id']}`\n\n"
-
-			if index == 4:
-				status_page += f"➕ {number_of_task-4} Ongoing Task...\n\n"
-				break
-								
-		status_page += "━━━━━━━━━━━━━━━━━━━━━\n"	
-		
-		postprocessing_response = await self.client.get(self.SABNZBD_API, params={'mode':'history'})
-		postprocessing_response = postprocessing_response.json()
-					
-		postprocessing_response["history"]["slots"] = [slot for slot in postprocessing_response["history"]["slots"] if slot["status"] not in ["Completed", "Failed"]]		
-		
-		postprocessing_queue_list = postprocessing_response["history"]["slots"]
-						
-		if postprocessing_response:
-			status_page += "**✴ Post Processing -\n\n**"
-												
-		for index, history in enumerate(postprocessing_queue_list):
-		    status_page += f"**🗂 FileName :** __{history['name']}__\n"
-		    status_page += f"**Status :** __{history['status']}__\n"
+			status_page += "**❇ Downloading -\n\n**"
+			
+			for index, queue in enumerate(downloading_queue_list):
+			    filled_blocks = round(int(queue['percentage']) * self.__number_of_blocks / 100)
+			    unfilled_blocks = self.__number_of_blocks - filled_blocks
+			    
+			    file_name = queue['filename']
+			    if re.search(r"(http|https)", file_name):
+			    	file_name = "Adding file from ID."
+			    
+			    status_page += f"**🗂 FileName:** __{file_name}__\n"
+			    status_page += f"**{queue['percentage']}%**  `[{self.__completed_block_ascii * filled_blocks}{self.__remaining_block_ascii * unfilled_blocks}]`\n"
+			    status_page += f"**{queue['sizeleft']}** __remaining of__ **{queue['size']}**\n"
+			    status_page += f"**Status:** {queue['status']} | **ETA:** {queue['timeleft']}\n"
+			    status_page += f"**Task ID:** `{queue['nzo_id']}`\n\n"
+			    
+			    if index == 4 and len(downloading_queue_list) > 4:
+			        status_page += f"➕ {max(len(downloading_queue_list)-4, 0)} Ongoing Task...\n\n"
+			        break
+			        
+		if postprocessing_queue_list:
+		    status_page += "━━━━━━━━━━━━━━━━━━━━━\n"
+		    status_page += "**✴ Post Processing -\n\n**"
 		    
-		    action= history.get('action_line', None)		    
-		    if isinstance(action, list) and action_line:
-		    	status_page += f"**Action:** {action[0]}\n"
-		    
-		    if action:
-		    	if "Running script:" in action:
-		    		action = action.replace("Running script:", "")
-		    	status_page += f"**Action :** __{action.strip()}__\n"
-
-		    status_page += "\n"		    			    	
-		    if index == 4:
-		    	status_page += f"➕ {number_of_task-4} Ongoing Task...\n\n"
-		    	break
-		    	
-		    
-		status_page += "━━━━━━━━━━━━━━━━━━━━━\n"	
-		status_page += "ok"
+		    for index, history in enumerate(postprocessing_queue_list):
+		        status_page += f"**🗂 FileName :** __{history['name']}__\n"
+		        status_page += f"**Status :** __{history['status']}__\n"
+		        
+		        action = history.get('action_line')
+		        if action and "Running script:" in action:
+		            action = action.replace("Running script:", "")
+		            status_page += f"**Action :** __{action.strip()}__\n\n"
+		        
+		        if index == 4 and len(postprocessing_queue_list) > 4:
+		            status_page += f"➕ Extra Queued Task...\n\n"
+		            break
+		            
+		if status_page:
+		    status_page += "━━━━━━━━━━━━━━━━━━━━━\n"
+		    status_page += self.footer_message()
 		return status_page
-
+    
+    
 	async def postprocessing_status_page(self):
 		"""Generate status page for postprocessing progress message."""
 
