@@ -86,7 +86,7 @@ class UsenetBot:
 			    
 			    status_page += f"**🗂 FileName:** __{file_name}__\n"
 			    status_page += f"**{queue['percentage']}%**  `[{self.__completed_block_ascii * filled_blocks}{self.__remaining_block_ascii * unfilled_blocks}]`\n"
-			    status_page += f"**{queue['sizeleft']}** __remaining of__ **{queue['size']}**\n"
+			    status_page += f"**{queue['sizeleft']}** remaining of **{queue['size']}**\n"
 			    status_page += f"**Status:** {queue['status']} | **ETA:** {queue['timeleft']}\n"
 			    status_page += f"**Task ID:** `{queue['nzo_id']}`\n\n"
 			    
@@ -101,7 +101,7 @@ class UsenetBot:
 		    status_page += "**Post Processing -\n\n**"		    
 		    for index, history in enumerate(postprocessing_queue_list):
 		        status_page += f"**🗂 FileName :** __{history['name']}__\n"
-		        status_page += f"**Status :** __{history['status']}__\n"
+		        status_page += f"**Status :** {history['status']}\n"
 		        
 		        action = history.get('action_line')
 		        if isinstance(action, list):
