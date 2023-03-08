@@ -14,7 +14,6 @@ from TelegramBot.helpers.filters import check_auth, sudo_cmd
 sabnzbd_userid_log: dict = {} #saves userid of user along with his task id. {userid:[task1, task2]}
 
 usenetbot = UsenetBot ()
-
 @Client.on_message(filters.command(["status", "dstatus"]) & check_auth)
 async def postprocessing_status(client: Client, message: Message):
 	await usenetbot.show_downloading_status(client, message)
