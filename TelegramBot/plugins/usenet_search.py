@@ -9,8 +9,20 @@ from TelegramBot.helpers.filters import check_auth, sudo_cmd
 from TelegramBot.helpers.pasting_services import katbin_paste, telegraph_paste 
 
 
+def errors(func: Callable) -> Callable:
+    @wraps(func)
+    async def decorator(client, message, *args,**kwargs):
+        try:
+            return await func(client, message, *args, **kwargs)
+        except Exception as error:
+            await message.reply("Something went wrong. Please Try again later.")
+
+    return decorator
+    
+
 nzbhydra = NzbHydra()
 @Client.on_message(filters.command(["nzbfind", "nzbsearch", "movie", "series", "tv"]) & check_auth)
+@errors
 async def search(_, message: Message):
 
 	if len(message.command) < 2:
@@ -56,9 +68,11 @@ async def search(_, message: Message):
 async def indexer_list(_, message: Message):
 	"""List all the connected indexers."""
 	
+	replymsg = await message.reply_text("Fetching list....", quote=True)
 	indexers = await nzbhydra.list_indexers()
+	
 	if indexers:
-		return await message.reply_text(indexers, quote=True)
+		return await replymsg.edit(indexers)
 
-	return await message.reply_text("No indexers found.", quote=True)
+	return await replymsg.edit("No indexers found.")
 
