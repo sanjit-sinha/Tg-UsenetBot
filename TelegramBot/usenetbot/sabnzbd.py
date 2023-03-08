@@ -18,8 +18,6 @@ from TelegramBot import BotStartTime, SABNZBD_ENDPOINT
 from TelegramBot.helpers.functions import get_readable_bytes
 from TelegramBot.helpers.pasting_services import katbin_paste
 from TelegramBot.helpers.functions import get_readable_time
-
-
 downloading_status_chatids = {} #saves chatid where downloading status page is active.
 
 class UsenetBot:
