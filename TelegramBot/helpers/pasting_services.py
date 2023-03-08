@@ -33,7 +33,7 @@ async def telegraph_paste(content: str, title="UsenetBot") -> str:
 	telegraph = Telegraph(domain="graph.org")
 
 	await telegraph.create_account(short_name=title)
-	html_content = "<p>" + content.replace("\n", "<br>") + "</p>"
+	html_content =  content.replace("\n", "<br>") 
 	try:
 		response = await telegraph.create_page(title="Usenet Bot search result -", html_content=html_content)
 		response = response["url"]
