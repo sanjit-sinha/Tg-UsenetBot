@@ -53,6 +53,7 @@ class UsenetBot:
 	    
 	    botuptime = get_readable_time(timefunc() - BotStartTime)
 	    msg = f"**🔘 DL: {get_readable_bytes(download_speed)}/s 🔘 UL: {get_readable_bytes(upload_speed)}/s"
+	    msg += f"Uptime: {botuptime}"
 	    return msg
 	
 	async def downloading_status_page(self):
