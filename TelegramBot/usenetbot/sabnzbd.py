@@ -104,12 +104,12 @@ class UsenetBot:
 		        status_page += f"**Status :** __{history['status']}__\n"
 		        
 		        action = history.get('action_line')
-		        if isinstance(action, list) and action_line:
+		        if isinstance(action, list):
 		            status_page += f"**Action :** {action[0]}\n"
 		        
 		        if action and "Running script:" in action:
 		            action = action.replace("Running script:", "")
-		            status_page += f"**Action :** __{action.strip()}__\n"
+		            status_page += f"**Action :** {action.strip()}\n"
     	    	    
 		        if index == 4 and len(postprocessing_queue_list) > 4:
 		            status_page += f"\n**+ Extra Queued Task...**\n\n"
