@@ -3,6 +3,7 @@ import requests
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
+from typing import Callable, Union
 
 from TelegramBot.usenetbot.nzbhydra import NzbHydra
 from TelegramBot.helpers.filters import check_auth, sudo_cmd
