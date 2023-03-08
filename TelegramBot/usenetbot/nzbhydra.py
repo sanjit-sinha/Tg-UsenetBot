@@ -29,7 +29,7 @@ class NzbHydra:
 		for index, result in enumerate(search_result):
 			message += f"Title : {result[0]}\n"
 			message += f"Size: {result[1]}\n"
-			message += f"ID: {result[2]}\n\n"
+			message += f"ID:   {result[2]}\n\n"
 			if index == 100: break
 
 		if message:
