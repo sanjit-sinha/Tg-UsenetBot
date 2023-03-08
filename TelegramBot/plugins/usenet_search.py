@@ -19,7 +19,6 @@ def errors(func: Callable) -> Callable:
             return await func(client, message, *args, **kwargs)
         except Exception as error:
             await message.reply("Something went wrong. Please Try again later.")
-
     return decorator
     
 
