@@ -12,7 +12,7 @@ class NzbHydra:
 	def __init__(self):
 		self.NZBHYDRA_ENDPOINT = NZBHYDRA_ENDPOINT
 		self.NZBHYDRA_STATS_ENDPOINT = NZBHYDRA_STATS_ENDPOINT
-		self.client =  httpx.AsyncClient(httpx.Timeout(10.0))
+		self.client =  httpx.AsyncClient(timeout=10)
 
 	def parse_xml(self, response, query):
 		root = ET.fromstring(response)
