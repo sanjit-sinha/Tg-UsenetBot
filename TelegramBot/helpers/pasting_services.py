@@ -25,7 +25,7 @@ async def katbin_paste(text: str) -> str:
 		return "something went wrong while pasting text in katb.in."
 
 
-async def telegraph_paste(content: str, title="TelegramBot") -> str:
+async def telegraph_paste(content: str, title="UsenetBot") -> str:
 	"""
 	paste the text in telegra.ph (graph.org) website (text should follow proper html tags).
 	"""
@@ -33,9 +33,9 @@ async def telegraph_paste(content: str, title="TelegramBot") -> str:
 	telegraph = Telegraph(domain="graph.org")
 
 	await telegraph.create_account(short_name=title)
-	html_content = "<pre>" + content.replace("\n", "<br>") + "</pre>"
+	html_content = "<p>" + content.replace("\n", "<br>") + "</p>"
 	try:
-		response = await telegraph.create_page(title=title, html_content=html_content)
+		response = await telegraph.create_page(title="Usenet Bot search result -", html_content=html_content)
 		response = response["url"]
 	except:
 		response = await katbin_paste(content)
