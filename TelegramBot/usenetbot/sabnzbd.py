@@ -52,9 +52,10 @@ class UsenetBot:
 	    msg = f"**🔘 DL: {get_readable_bytes(download_speed)}/s 🔘 UL: {get_readable_bytes(upload_speed)}/s\n"
 	    msg += f"Uptime: {botuptime}"
 	    return msg
+
 	
 	async def downloading_status_page(self):
-		"""Generate status page for downloading progress message."""
+		"""Generate status page for progress message."""
 		
 		try:
 		    downloading_response = await self.client.get(self.SABNZBD_API, params={'mode': 'queue'})
