@@ -24,12 +24,12 @@ class NzbHydra:
 		   item.find('guid').text]
 		   for item in channel.findall('item')]
 
-		title = f"Search Results For: {query}\n\n"
+		title = f"<pre> Search Results For: {query}</pre>\n\n"
 		message = ""
 		for index, result in enumerate(search_result):
 			message += f"Title : {result[0]}\n"
 			message += f"Size: {result[1]}\n"
-			message += f"ID: <pre> {result[2]}</pre>\n\n"
+			message += f"ID: <code> {result[2]}</code>\n\n"
 			if index == 100: break
 
 		if message:
