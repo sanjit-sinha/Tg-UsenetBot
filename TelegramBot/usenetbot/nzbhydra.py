@@ -31,7 +31,7 @@ class NzbHydra:
 			message += f"Size: {result[1]}\n"
 				
 			ID =  result[2]
-			if "-" in ID: ID.replace("-", "")
+			if "-" in ID: ID = ID.replace("-", "")
 			message += f"<pre> ID: {ID}</pre>\n\n"
 			if index == 100: break
 
