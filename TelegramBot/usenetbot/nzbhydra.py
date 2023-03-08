@@ -33,7 +33,6 @@ class NzbHydra:
 			if index == 100: break
 
 		if message:
-			message = html.escape(message)
 			html_content = title + message
 			return html_content
 		return None
