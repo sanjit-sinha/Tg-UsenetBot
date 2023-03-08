@@ -150,15 +150,14 @@ async def grabid(client: Client, message: Message):
 
 	success_taskids = []
 	for id in nzbhydra_idlist:
-		nzburl = NZBHYDRA_URL_ENDPOINT.replace("replace_id", id)
-		response = requests.head(nzburl)
-
-		if "Content-Disposition" in response.headers:
-			result = await usenetbot.add_nzburl(nzburl)
-
-			if result["status"]:
-				success_taskids.append(result['nzo_ids'][0])
-
+		for nzburl in [NZBHYDRA_URL_ENDPOINT.replace("replace_id", id), NZBHYDRA_URL_ENDPOINT.replace("replace_id", f"-{id}")]:
+			response = requests.head(nzburl)
+			
+			if "Content-Disposition" in response.headers:
+			    result = await usenetbot.add_nzburl(nzburl)
+			    if result["status"]:
+			    	success_taskids.append(result['nzo_ids'][0])
+				
 	if success_taskids:
 		sabnzbd_userid_log.setdefault(userid, []).extend(success_taskids)
 		asyncio.create_task(usenetbot.show_downloading_status(client, message))
