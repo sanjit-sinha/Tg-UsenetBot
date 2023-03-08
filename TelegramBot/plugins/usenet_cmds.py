@@ -2,6 +2,7 @@ import re
 import httpx
 import asyncio
 import requests
+from cachetools import TTLCache
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
