@@ -155,7 +155,7 @@ class UsenetBot:
 		return response.json()
 
 	async def pauseall_task(self):
-		response = self.client.get(self.SABNZBD_API, params={'mode':'pause'})
+		response = await self.client.get(self.SABNZBD_API, params={'mode':'pause'})
 		response = response.json()
 		return response["status"]
 
