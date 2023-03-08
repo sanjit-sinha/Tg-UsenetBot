@@ -52,7 +52,7 @@ class UsenetBot:
 	    upload_speed = net_io_counters.bytes_sent - bytes_sent
 	    
 	    botuptime = get_readable_time(timefunc() - BotStartTime)
-	    msg = f"**🔘 DL: {get_readable_bytes(download_speed)}/s 🔘 UL: {get_readable_bytes(upload_speed)}/s"
+	    msg = f"**🔘 DL: {get_readable_bytes(download_speed)}/s 🔘 UL: {get_readable_bytes(upload_speed)}/s\n"
 	    msg += f"Uptime: {botuptime}"
 	    return msg
 	
