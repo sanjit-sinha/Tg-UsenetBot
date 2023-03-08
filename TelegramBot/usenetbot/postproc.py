@@ -1,4 +1,3 @@
-postproc.py
 from logging.handlers import RotatingFileHandler
 import subprocess
 import requests
