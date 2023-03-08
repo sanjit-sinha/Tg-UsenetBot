@@ -20,10 +20,7 @@ from TelegramBot.helpers.pasting_services import katbin_paste
 from TelegramBot.helpers.functions import get_readable_time
 
 
-
 downloading_status_chatids = {} #saves chatid where downloading status page is active.
-postprocess_status_chatids = {} #saves chatid where postprocessing status page is active.
-
 
 class UsenetBot:
 
@@ -122,35 +119,6 @@ class UsenetBot:
 		    status_page += self.footer_message()
 		return status_page
     
-    
-	async def postprocessing_status_page(self):
-		"""Generate status page for postprocessing progress message."""
-
-		response = await self.client.get(self.SABNZBD_API, params={'mode':'history'})
-		response = response.json()
-		if not response["history"]["slots"]: return None
-
-		history_list = response["history"]["slots"]
-
-		status_page = ""
-		for index, history in enumerate(history_list):
-			if history["status"] not in ["Completed", "Failed"]:
-				msg = f"**📂 FileName :** __{history['name']}__\n"
-				msg += f"**Status :** __{history['status']}__\n"
-				action= history.get('action_line', None)
-				if isinstance(action, list) and action_line:
-					msg += f"**Action:** {action[0]}\n"
-
-				if action:
-					if "Running script:" in action:
-						action = action.replace("Running script:", "")
-					msg += f"**Action :** __{action.strip()}__\n"
-
-				status_page += msg
-
-		if status_page: status_page += self.footer_message()
-		return status_page
-
 
 	async def check_task(self, task_id):
 		response = await self.client.get(self.SABNZBD_API, params={'mode':'queue', 'nzo_ids': task_id})
@@ -223,17 +191,14 @@ class UsenetBot:
 		return response.json()
 
 
-	async def clear_progresstask(self, status_message,  chat_id,  progress):
+	async def clear_progresstask(self, status_message,  chat_id):
 		"""remove job, delete message and clear dictionary of progress bar."""
 
-		scheduler.remove_job(f"{progress}_{str(chat_id)}")
+		scheduler.remove_job(f"{str(chat_id)}")
 		try: await status_message.delete()
 		except: pass #passing errors like status message deleted.
-
-		if progress == "downloading":
-			downloading_status_chatids.pop(chat_id)
-		elif progress == "postprocessing":
-			postprocess_status_chatids.pop(chat_id)
+		
+		downloading_status_chatids.pop(chat_id)
 
 
 	async def show_downloading_status(self, client, message):
@@ -243,7 +208,7 @@ class UsenetBot:
 		if chat_id in downloading_status_chatids:
 			message_id = downloading_status_chatids[chat_id]
 			status_message= await client.get_messages(chat_id, message_id)
-			await self.clear_progresstask(status_message, chat_id,  progress="downloading")
+			await self.clear_progresstask(status_message, chat_id)
 
 		# Get the status page
 		status_page = await self.downloading_status_page()
@@ -259,41 +224,11 @@ class UsenetBot:
 
 			status_page = await self.downloading_status_page()
 			if not status_page:
-				return await self.clear_progresstask(status_message, chat_id,  progress="downloading")
+				return await self.clear_progresstask(status_message, chat_id)
 
 			try: await status_message.edit(status_page)
-			except: await self.clear_progresstask(status_message, chat_id,  progress="downloading")
+			except: await self.clear_progresstask(status_message, chat_id)
 
-		scheduler.add_job(edit_status_message, "interval", seconds=10, misfire_grace_time=15,max_instances=2, id=f"downloading_{str(chat_id)}")
+		scheduler.add_job(edit_status_message, "interval", seconds=10, misfire_grace_time=15,max_instances=2, id=f"{str(chat_id)}")
 
 
-	async def show_postprocessing_status(self, client, message):
-		chat_id = message.chat.id
-
-		# Remove previous status message and scheduled job for that chat_id
-		if chat_id in postprocess_status_chatids:
-			message_id = postprocess_status_chatids[chat_id]
-			status_message= await client.get_messages(chat_id, message_id)
-			await self.clear_progresstask(status_message, chat_id,  progress="postprocessing")
-
-		# Get the status page
-		status_page = await self.postprocessing_status_page()
-		if not status_page:
-			return await client.send_message(chat_id, "No ongoing post processing task found." , reply_to_message_id=message.id)
-
-		# Send the status message and start the job to update the postprocessing status message after x interval.
-		status_message= await client.send_message(chat_id, status_page, reply_to_message_id=message.id)
-		postprocess_status_chatids[chat_id] = status_message.id
-
-		async def edit_status_message():
-			"""Edit the status message  after x seconds."""
-
-			status_page = await self.postprocessing_status_page()
-			if not status_page:
-				return await self.clear_progresstask(status_message, chat_id,  progress="postprocessing")
-
-			try: await status_message.edit(status_page)
-			except Exception as error:
-				return await self.clear_progresstask(status_message, chat_id,  progress="postprocessing")
-
-		scheduler.add_job(edit_status_message, "interval", seconds=10, misfire_grace_time=15,max_instances=2, id=f"postprocessing_{str(chat_id)}")
