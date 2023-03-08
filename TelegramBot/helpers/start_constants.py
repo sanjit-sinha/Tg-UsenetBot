@@ -25,6 +25,6 @@ ABOUT_CAPTION = f"""• Python version : {__python_version__}
 
 START_ANIMATION = "https://telegra.ph/file/c0857672b427bec8542f6.mp4"
 
-START_CAPTION = """Hello there! I am a Telegram bot designed to help you control your SABnzbd and NZBHydra instances via Telegram to easily manage your downloads, see their progress, Asearch for new content, and much more!  \n\nUse buttons to navigate and know more about me :)"""
+START_CAPTION = """Hello there! I am a Telegram bot designed to help you control your SABnzbd and NZBHydra instances via Telegram to easily manage your downloads, see their progress, search for new content, and much more!  \n\nUse buttons to navigate and know more about me :)"""
 
 COMMAND_CAPTION = """**Here are the list of commands which you can use in bot.\n**"""
