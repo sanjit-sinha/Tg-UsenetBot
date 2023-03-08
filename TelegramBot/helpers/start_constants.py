@@ -3,19 +3,17 @@ from TelegramBot.version import (__python_version__, __version__, __pyro_version
 COMMAND_TEXT = """
 🗒️ Documentation for commands available to user's
 
-• /nzbsearch - Search your query.
-• /movie - Search by movie name / IMDB ID / IMDB link.
-• /series - Search by series name / IMDB ID / IMDB link.
-• /indexers - List all indexers connected with NZBHydra.
+• /nzbfind - Search your query.
+• /movie - Search by movie name / Imdb ID / Imdb link.
+• /series - Search by series name / Imdb Id / Imdb link.
+
+• /status - Get status message of downloading and post processing.
 • /serverstats - Get detailed stats of the server.
 • /nzbgrab - Add NZB IDs to download.
 • /nzbmirror - Mirror .nzb file.
-• /status - Get downloading status.
-• /pstatus - Get post-processing status.
 • /resume - Resume the task.
 • /pause - Pause the task.
 • /cancel - Cancel the task.
-• /update - Update the bot.
 """
 
 
