@@ -33,7 +33,7 @@ class UsenetBot:
 		self.__completed_block_ascii = "▰"
 
 		self.SABNZBD_API = f"{SABNZBD_ENDPOINT}&output=json"
-		self.client =  httpx.AsyncClient()
+		self.client =  httpx.AsyncClient(timeout=10)
 
 
 	def footer_message(self, speed=None):
