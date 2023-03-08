@@ -50,9 +50,6 @@ async def start(_, message: Message):
 
 @Client.on_message(filters.command(["ping", "alive"]))
 async def ping(_, message: Message):
-	"""
-   Give ping speed of Telegram API along with Bot Uptime.
-   """
 
 	pong_reply = await message.reply_text("pong!", quote=True)
 
