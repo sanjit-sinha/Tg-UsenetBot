@@ -11,7 +11,6 @@ from TelegramBot.config import SUDO_USERID
 from TelegramBot import NZBHYDRA_URL_ENDPOINT
 from TelegramBot.usenetbot.sabnzbd import UsenetBot
 from TelegramBot.helpers.filters import check_auth, sudo_cmd
-
 sabnzbd_userid_log = TTLCache(maxsize=128, ttl=600) #saves userid of user along with his task id. {userid:[task1, task2]}
 
 usenetbot = UsenetBot ()
