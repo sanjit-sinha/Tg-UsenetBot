@@ -102,7 +102,6 @@ def run_command(command):
                                 LOGGER(__name__).info("File has been successfully uploaded to gdrive.")
                                 break
 
-if category == "*": category = "Default"
 reasons = {
     "1": "Failed verification",
     "2": "Failed unpack",
@@ -140,5 +139,5 @@ if SHOW_DRIVE_LINK:
         drive_link = f'<a href="{drive_link}">Drive Link</a>'
 
 
-notification_message = f"<code>🗂 {jobname}</code>\n\n{file_size} | Success | {category} | {drive_link} "
+notification_message = f"<code>🗂 {jobname}</code>\n\n{file_size} | Success | {drive_link} "
 telegram_notification(message=notification_message)
