@@ -41,7 +41,7 @@ class NzbHydra:
 		return None
 
 	async def query_search(self, query):
-		response = await self.client.get(self.NZBHYDRA_ENDPOINT, params={"t":"search", "q":query}) ; print(response.text
+		response = await self.client.get(self.NZBHYDRA_ENDPOINT, params={"t":"search", "q":query}) ; print(response.text)
 		return self.parse_xml(response.text, query)
 
 	async def movie_search(self, query):
