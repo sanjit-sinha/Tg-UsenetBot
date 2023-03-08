@@ -6,11 +6,11 @@ from pyrogram.types import Message
 
 from TelegramBot.usenetbot.nzbhydra import NzbHydra
 from TelegramBot.helpers.filters import check_auth, sudo_cmd
-from TelegramBot.helpers.pasting_services import katbin_paste
+from TelegramBot.helpers.pasting_services import katbin_paste, telegraph_paste 
 
 
 nzbhydra = NzbHydra()
-@Client.on_message(filters.command(["search", "nzbsearch", "movie", "series", "tv"]) & check_auth)
+@Client.on_message(filters.command(["nzbfind", "nzbsearch", "movie", "series", "tv"]) & check_auth)
 async def search(_, message: Message):
 
 	if len(message.command) < 2:
@@ -21,7 +21,7 @@ async def search(_, message: Message):
 
 	output = ""
 	command = message.command[0]
-	if command in ["search", "nzbsearch"]:
+	if command in ["nzbfind", "nzbsearch"]:
 		output = await nzbhydra.query_search(user_input)
 
 	elif command in ["movie", "movies"]:
@@ -46,14 +46,16 @@ async def search(_, message: Message):
 		else: output = await nzbhydra.series_search(user_input)
 
 	if output:
-		telegraph_output = await katbin_paste(output)
-		return await reply_msg.edit(telegraph_output, disable_web_page_preview=True)
+		telegraph_output = await telegraph_paste(output)
+		return await reply_msg.edit(f"`{user_input}`\n\ntelegraph_output", disable_web_page_preview=False)
 
 	return await reply_msg.edit("Nothing Found.")
 
 
 @Client.on_message(filters.command(["indexers"]) & sudo_cmd)
 async def indexer_list(_, message: Message):
+	"""List all the connected indexers."""
+	
 	indexers = await nzbhydra.list_indexers()
 	if indexers:
 		return await message.reply_text(indexers, quote=True)
