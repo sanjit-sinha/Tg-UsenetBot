@@ -24,7 +24,7 @@ class NzbHydra:
 		   item.find('guid').text]
 		   for item in channel.findall('item')]
 
-		title = f"<pre> Search Results For: {query}</pre>\n\n"
+		title = f"Search Results For: {query}\n\n"
 		message = ""
 		for index, result in enumerate(search_result):
 			message += f"Title : {result[0]}\n"
