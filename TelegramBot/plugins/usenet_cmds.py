@@ -14,10 +14,6 @@ from TelegramBot.helpers.filters import check_auth, sudo_cmd
 sabnzbd_userid_log: dict = {} #saves userid of user along with his task id. {userid:[task1, task2]}
 
 usenetbot = UsenetBot ()
-@Client.on_message(filters.command("pstatus") & check_auth)
-async def downloading_status(client: Client, message: Message):
-	await usenetbot.show_postprocessing_status(client, message)
-
 
 @Client.on_message(filters.command(["status", "dstatus"]) & check_auth)
 async def postprocessing_status(client: Client, message: Message):
@@ -100,7 +96,7 @@ async def delete_task(client: Client, message: Message):
 
 	result = await usenetbot.delete_task(task_id=user_input)
 	if result:
-		return await message.reply_text(f"Task {user_input} successfully deleted.", quote=True)
+		return await message.reply_text(f"Task {user_input} successfully canceled.", quote=True)
 
 	else: return await message.reply_text("No Task found with that Task ID .", quote=True)
 
