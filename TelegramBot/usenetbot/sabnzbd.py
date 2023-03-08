@@ -229,5 +229,3 @@ class UsenetBot:
 			except: await self.clear_progresstask(status_message, chat_id)
 
 		scheduler.add_job(edit_status_message, "interval", seconds=10, misfire_grace_time=15,max_instances=2, id=f"{str(chat_id)}")
-
-
