@@ -264,7 +264,7 @@ class UsenetBot:
 			try: await status_message.edit(status_page)
 			except: await self.clear_progresstask(status_message, chat_id,  progress="downloading")
 
-		scheduler.add_job(edit_status_message, "interval", seconds=5, misfire_grace_time=15,max_instances=2, id=f"downloading_{str(chat_id)}")
+		scheduler.add_job(edit_status_message, "interval", seconds=10, misfire_grace_time=15,max_instances=2, id=f"downloading_{str(chat_id)}")
 
 
 	async def show_postprocessing_status(self, client, message):
