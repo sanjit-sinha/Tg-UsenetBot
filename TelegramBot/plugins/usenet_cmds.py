@@ -16,6 +16,11 @@ sabnzbd_userid_log = TTLCache(maxsize=128, ttl=600) #saves userid of user along 
 usenetbot = UsenetBot ()
 @Client.on_message(filters.command(["status", "dstatus"]) & check_auth)
 async def postprocessing_status(client: Client, message: Message):
+	try:
+		await message.delete()
+	except :
+		pass
+	
 	await usenetbot.show_downloading_status(client, message)
 
 
@@ -162,3 +167,4 @@ async def grabid(client: Client, message: Message):
 
 	return await replymsg.edit("No task has been added.")
 
+ 
