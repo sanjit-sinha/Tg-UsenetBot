@@ -17,8 +17,7 @@ async def katbin_paste(text: str) -> str:
         paste_post = await client.post(
             katbin_url,
             data={"_csrf_token": csrf_token, "paste[content]": text},
-            follow_redirects=False,
-        )
+            follow_redirects=False)
         output_url = f"{katbin_url}{paste_post.headers['location']}"
         await client.aclose()
         return output_url
@@ -37,8 +36,7 @@ async def telegraph_paste(content: str, title="UsenetBot") -> str:
     html_content = content.replace("\n", "<br>")
     try:
         response = await telegraph.create_page(
-            title="Usenet Bot search result -", html_content=html_content
-        )
+            title="Usenet Bot search result -", html_content=html_content)
         response = response["url"]
     except:
         response = await katbin_paste(content)
