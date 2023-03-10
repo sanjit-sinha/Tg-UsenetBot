@@ -43,6 +43,5 @@ async def telegraph_paste(content: str, title="UsenetBot") -> str:
 
     try:
         await telegraph.revoke_access_token()
-    except:
-        pass
+    except: pass
     return response
