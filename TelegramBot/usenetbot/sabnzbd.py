@@ -102,7 +102,7 @@ class UsenetBot:
 		        if re.search(r"(http|https)", file_name):
 		        	file_name = "N/A"
 		     			    		        
-		        status_page += f"**🗂 FileName :**{file_name}\n"
+		        status_page += f"**🗂 FileName :** {file_name}\n"
 		        status_page += f"**Status :** {history['status']}\n"
 		        
 		        action = history.get('action_line')
