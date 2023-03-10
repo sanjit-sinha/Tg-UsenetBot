@@ -56,21 +56,20 @@ class UsenetBot:
 
         try:
             downloading_response = await self.client.get(
-                self.SABNZBD_API, params={"mode": "queue"}
-            )
+                self.SABNZBD_API, params={"mode": "queue"})
+            
             downloading_queue_list = downloading_response.json()["queue"]["slots"]
         except:
             downloading_queue_list = []
 
         try:
             postprocessing_response = await self.client.get(
-                self.SABNZBD_API, params={"mode": "history"}
-            )
+                self.SABNZBD_API, params={"mode": "history"})
+            
             postprocessing_queue_list = [
                 slot
                 for slot in postprocessing_response.json()["history"]["slots"]
-                if slot["status"] not in ["Completed", "Failed"]
-            ]
+                if slot["status"] not in ["Completed", "Failed"]]
             postprocessing_queue_list.reverse()
         except:
             postprocessing_queue_list = []
@@ -82,8 +81,8 @@ class UsenetBot:
 
             for index, queue in enumerate(downloading_queue_list):
                 filled_blocks = round(
-                    int(queue["percentage"]) * self.__number_of_blocks / 100
-                )
+                    int(queue["percentage"]) * self.__number_of_blocks / 100)
+                
                 unfilled_blocks = self.__number_of_blocks - filled_blocks
 
                 file_name = queue["filename"]
@@ -93,11 +92,11 @@ class UsenetBot:
                 status_page += f"**🗂 FileName:** {file_name}\n"
                 status_page += f"**{queue['percentage']}%**  `[{self.__completed_block_ascii * filled_blocks}{self.__remaining_block_ascii * unfilled_blocks}]`\n"
                 status_page += (
-                    f"**{queue['sizeleft']}** remaining of **{queue['size']}**\n"
-                )
+                    f"**{queue['sizeleft']}** remaining of **{queue['size']}**\n")
+                
                 status_page += (
-                    f"**Status:** {queue['status']} | **ETA:** {queue['timeleft']}\n"
-                )
+                    f"**Status:** {queue['status']} | **ETA:** {queue['timeleft']}\n")
+                
                 status_page += f"**Task ID:** `{queue['nzo_id']}`\n\n"
 
                 if index == 4 and len(downloading_queue_list) > 4:
@@ -138,15 +137,15 @@ class UsenetBot:
 
     async def check_task(self, task_id):
         response = await self.client.get(
-            self.SABNZBD_API, params={"mode": "queue", "nzo_ids": task_id}
-        )
+            self.SABNZBD_API, params={"mode": "queue", "nzo_ids": task_id})
+        
         response = response.json()
         return bool(response["queue"]["slots"])
 
     async def get_task(self, task_id):
         response = await self.client.get(
-            self.SABNZBD_API, params={"mode": "queue", "nzo_ids": task_id}
-        )
+            self.SABNZBD_API, params={"mode": "queue", "nzo_ids": task_id})
+        
         response = response.json()
         return bool(response["queue"]["slots"])
 
@@ -195,8 +194,8 @@ class UsenetBot:
 
     async def deleteall_task(self):
         response = await self.client.get(
-            self.SABNZBD_API, params={"mode": "queue", "name": "delete", "value": "all"}
-        )
+            self.SABNZBD_API, params={"mode": "queue", "name": "delete", "value": "all"})
+        
         response = response.json()
         return response["status"]
 
@@ -210,8 +209,8 @@ class UsenetBot:
         payload = {"nzbfile": (path_name.split("/")[-1], nzb_content)}
         params = {"mode": "addfile"}
         response = await self.client.post(
-            self.SABNZBD_API, params=params, files=payload
-        )
+            self.SABNZBD_API, params=params, files=payload)
+        
         return response.json()
 
     async def add_nzburl(self, nzburl):
@@ -243,13 +242,12 @@ class UsenetBot:
         status_page = await self.downloading_status_page()
         if not status_page:
             return await client.send_message(
-                chat_id, "No ongoing task currently.", reply_to_message_id=message.id
-            )
+                chat_id, "No ongoing task currently.", reply_to_message_id=message.id)
 
         # Send the status message and start the job to update the downloading status message after x interval.
         status_message = await client.send_message(
-            chat_id, status_page, reply_to_message_id=message.id
-        )
+            chat_id, status_page, reply_to_message_id=message.id)
+        
         downloading_status_chatids[chat_id] = status_message.id
 
         async def edit_status_message():
@@ -270,5 +268,4 @@ class UsenetBot:
             seconds=10,
             misfire_grace_time=15,
             max_instances=2,
-            id=f"{str(chat_id)}",
-        )
+            id=f"{str(chat_id)}")
