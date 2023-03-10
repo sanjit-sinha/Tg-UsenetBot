@@ -34,7 +34,7 @@ _____
  
 **More about Usenet : [IITK Article](http://www.iitk.ac.in/LDP/HOWTO/Usenet-News-HOWTO/x27.html) • [Basic Guide](https://graph.org/EVERYTHING-YOU-NEED-TO-KNOW-ABOUT-USENET-09-04) • [Usenet Reddit wiki](https://www.reddit.com/r/usenet/wiki/index/)**
 
-***Note: This bot doesn't download any NZB files or content. It simply interacts with various APIs such as Sabnzbd and NZBGet to display progress and allow user to control them via Telegram.***
+***Note: This bot doesn't download any NZB files or content. It simply interacts with various APIs such as Sabnzbd and NZBHydra to display progress and allow user to control them via Telegram.***
 
 ____
 
@@ -42,8 +42,7 @@ ____
 <h2><img src="https://graph.org/file/3ad54286db72e4ad3a7da.png" width="35"><b> Bot Commands and Usage</b></h2>
 </div>
 
-- `/status` - To see downloading status with live updates.
-- `/pstatus` - To see post processing status with live updates.
+- `/status` - To see progress status with live update.
 - `/stats` - Get  detail stats of Bot server.
 - `/pause` - Pause the given Taskid task.
 - `/resume` - Resume the given Taskid task.
@@ -54,7 +53,7 @@ ____
 
 searching stuff -
 
-- `/search`- Search your query.
+- `/nzbfind`- Search your query.
 - `/movie` - Movie name / IMDB ID / IMDB link.
 - `/series` - Series Name / IMDB ID / IMDB link.
 - `/indexers` - List all your indexers. (sudo command)

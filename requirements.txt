@@ -5,6 +5,7 @@ speedtest-cli
 telegraph[aio]
 pyrate_limiter 
 apscheduler
+cachetools
 cachetools 
 aiofiles
 psutil

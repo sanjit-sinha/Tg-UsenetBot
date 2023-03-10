@@ -1,4 +1,5 @@
-from typing import Union 
+from typing import Union
+
 
 def get_readable_time(seconds: int) -> str:
     """
@@ -36,7 +37,7 @@ def get_readable_bytes(size: str) -> str:
 
     if not size:
         return ""
-    power = 2**10
+    power = 2 ** 10
     raised_to_pow = 0
 
     while size > power:
