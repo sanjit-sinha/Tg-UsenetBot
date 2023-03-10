@@ -49,40 +49,39 @@ class NzbHydra:
 
     async def query_search(self, query):
         response = await self.client.get(
-            self.NZBHYDRA_ENDPOINT, params={"t": "search", "q": query}
-        )
+            self.NZBHYDRA_ENDPOINT, params={"t": "search", "q": query})
+        
         return self.parse_xml(response.text, query)
 
     async def movie_search(self, query):
         response = await self.client.get(
-            self.NZBHYDRA_ENDPOINT, params={"t": "movie", "q": query}
-        )
+            self.NZBHYDRA_ENDPOINT, params={"t": "movie", "q": query})
+        
         return self.parse_xml(response.text, query)
 
     async def series_search(self, query):
         response = await self.client.get(
-            self.NZBHYDRA_ENDPOINT, params={"t": "tvsearch", "q": query}
-        )
+            self.NZBHYDRA_ENDPOINT, params={"t": "tvsearch", "q": query})
+        
         return self.parse_xml(response.text, query)
 
     async def imdb_movie_search(self, imdbid):
         response = await self.client.get(
-            self.NZBHYDRA_ENDPOINT, params={"t": "movie", "imdbid": imdbid}
-        )
+            self.NZBHYDRA_ENDPOINT, params={"t": "movie", "imdbid": imdbid})
+        
         return self.parse_xml(response.text, imdbid)
 
     async def imdb_series_search(self, imdbid):
         response = await self.client.get(
-            self.NZBHYDRA_ENDPOINT, params={"t": "tvsearch", "imdbid": imdbid}
-        )
+            self.NZBHYDRA_ENDPOINT, params={"t": "tvsearch", "imdbid": imdbid})
+        
         return self.parse_xml(response.text, imdbid)
 
     async def list_indexers(self):
         response = await self.client.get(self.NZBHYDRA_STATS_ENDPOINT)
         indexersDetail = response.json()["indexerApiAccessStats"]
         indexers_list = [
-            indexersDetail[x]["indexerName"] for x in range(len(indexersDetail))
-        ]
+            indexersDetail[x]["indexerName"] for x in range(len(indexersDetail))]
         if not indexers_list:
             return None
 
