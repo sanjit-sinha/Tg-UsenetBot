@@ -60,8 +60,7 @@ logging.basicConfig(
     handlers=[
         RotatingFileHandler(LOGFILE_PATH, mode="w+", maxBytes=5000000, backupCount=10),
         logging.StreamHandler(),
-    ],
-)
+    ])
 
 
 def LOGGER(name: str) -> logging.Logger:
@@ -85,16 +84,14 @@ def get_readable_bytes(size: str) -> str:
 def telegram_notification(message: str):
     data = {"text": message, "chat_id": NOTIFICATION_CHAT_ID, "parse_mode": "html"}
     response = requests.post(
-        f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage", json=data
-    )
+        f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage", json=data)
 
     if response.status_code == 200:
         sys.exit(0)
 
     # if response is not successful
     print(
-        "Either the bot_token is not valid or the bot is not allowed to send message in provided chat id."
-    )
+        "Either the bot_token is not valid or the bot is not allowed to send message in provided chat id.")
     sys.exit(1)
 
 
@@ -159,6 +156,5 @@ if SHOW_DRIVE_LINK:
 
 
 notification_message = (
-    f"<code>🗂 {jobname}</code>\n\n{file_size} | Success | {drive_link} "
-)
+    f"<code>🗂 {jobname}</code>\n\n{file_size} | Success | {drive_link} ")
 telegram_notification(message=notification_message)
