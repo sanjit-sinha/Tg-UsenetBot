@@ -26,21 +26,17 @@ def errors(func: Callable) -> Callable:
 nzbhydra = NzbHydra()
 
 
-@Client.on_message(
-    filters.command(["nzbfind", "nzbsearch", "movie", "series", "tv"]) & check_auth
-)
+@Client.on_message(filters.command(["nzbfind", "nzbsearch", "movie", "series", "tv"]) & check_auth)
 @errors
 async def search(_, message: Message):
 
     if len(message.command) < 2:
         return await message.reply_text(
-            "Please provide a proper search query.", quote=True
-        )
+            "Please provide a proper search query.", quote=True)
 
     user_input = message.text.split(maxsplit=1)[1]
     reply_msg = await message.reply_text(
-        "Searching your query. Please wait...", quote=True
-    )
+        "Searching your query. Please wait...", quote=True)
 
     output = ""
     command = message.command[0]
@@ -77,8 +73,7 @@ async def search(_, message: Message):
         telegraph_output = await telegraph_paste(output)
         return await reply_msg.edit(
             f"Search Query: `{user_input}`\n\n{telegraph_output}",
-            disable_web_page_preview=False,
-        )
+            disable_web_page_preview=False)
 
     return await reply_msg.edit("Nothing Found.")
 
