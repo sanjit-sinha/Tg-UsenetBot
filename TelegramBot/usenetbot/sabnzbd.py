@@ -97,7 +97,12 @@ class UsenetBot:
 			
 		    status_page += "**Post Processing -\n\n**"		    
 		    for index, history in enumerate(postprocessing_queue_list):
-		        status_page += f"**🗂 FileName :** {history['name']}\n"
+		        
+		        file_name = history['name']
+		        if re.search(r"(http|https)", file_name):
+		        	file_name = "N/A"
+		     			    		        
+		        status_page += f"**🗂 FileName :**{file_name}\n"
 		        status_page += f"**Status :** {history['status']}\n"
 		        
 		        action = history.get('action_line')
