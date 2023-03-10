@@ -23,8 +23,7 @@ usenetbot = UsenetBot()
 async def postprocessing_status(client: Client, message: Message):
     try:
         await message.delete()
-    except:
-        pass
+    except: pass
 
     await usenetbot.show_downloading_status(client, message)
 
@@ -36,8 +35,7 @@ async def sudo_cmds(client: Client, message: Message):
     if command == "resumeall":
         if await usenetbot.resumeall_task():
             return await message.reply_text(
-                "Resumed all Task successfully.", quote=True
-            )
+                "Resumed all Task successfully.", quote=True)
 
     elif command == "pauseall":
         if await usenetbot.pauseall_task():
@@ -46,8 +44,7 @@ async def sudo_cmds(client: Client, message: Message):
     elif command == "cancelall":
         if await usenetbot.deleteall_task():
             return await message.reply_text(
-                "Cancelled all Task successfully.", quote=True
-            )
+                "Cancelled all Task successfully.", quote=True)
 
     return await message.reply_text("something went wrong.", quote=True)
 
@@ -56,8 +53,7 @@ async def sudo_cmds(client: Client, message: Message):
 async def resume_task(client: Client, message: Message):
     if len(message.command) < 2:
         return await message.reply_text(
-            "Send Task ID with the command to resume the Task."
-        )
+            "Send Task ID with the command to resume the Task.")
 
     user_id, user_input = message.from_user.id, message.text.split(None, 1)[1]
     if (user_id not in sabnzbd_userid_log) and (user_id not in SUDO_USERID):
@@ -66,14 +62,12 @@ async def resume_task(client: Client, message: Message):
     if user_id not in SUDO_USERID:
         if user_input not in sabnzbd_userid_log[user_id]:
             return await message.reply_text(
-                "No Task found with that Task ID under your User ID.", quote=True
-            )
+                "No Task found with that Task ID under your User ID.", quote=True)
 
     result = await usenetbot.resume_task(task_id=user_input)
     if result:
         return await message.reply_text(
-            f"Task {user_input} successfully resumed.", quote=True
-        )
+            f"Task {user_input} successfully resumed.", quote=True)
     else:
         return await message.reply_text("No Task found with that Task ID .", quote=True)
 
@@ -90,14 +84,12 @@ async def pause_task(client: Client, message: Message):
     if user_id not in SUDO_USERID:
         if user_input not in sabnzbd_userid_log[user_id]:
             return await message.reply_text(
-                "No Task found with that Task ID under your User ID.", quote=True
-            )
+                "No Task found with that Task ID under your User ID.", quote=True)
 
     result = await usenetbot.pause_task(task_id=user_input)
     if result:
         return await message.reply_text(
-            f"Task {user_input} successfully paused.", quote=True
-        )
+            f"Task {user_input} successfully paused.", quote=True)
     else:
         return await message.reply_text("No Task found with that Task ID .", quote=True)
 
@@ -107,8 +99,7 @@ async def delete_task(client: Client, message: Message):
 
     if len(message.command) < 2:
         return await message.reply_text(
-            "Send Task ID with the command to delete the Task."
-        )
+            "Send Task ID with the command to delete the Task.")
 
     user_id, user_input = message.from_user.id, message.text.split(None, 1)[1]
     if (user_id not in sabnzbd_userid_log) and (user_id not in SUDO_USERID):
@@ -117,14 +108,12 @@ async def delete_task(client: Client, message: Message):
     if user_id not in SUDO_USERID:
         if user_input not in sabnzbd_userid_log[user_id]:
             return await message.reply_text(
-                "No Task found with that Task ID under your User ID.", quote=True
-            )
+                "No Task found with that Task ID under your User ID.", quote=True)
 
     result = await usenetbot.delete_task(task_id=user_input)
     if result:
         return await message.reply_text(
-            f"Task {user_input} successfully canceled.", quote=True
-        )
+            f"Task {user_input} successfully canceled.", quote=True)
 
     else:
         return await message.reply_text("No Task found with that Task ID .", quote=True)
@@ -138,12 +127,11 @@ async def nzbmirror(client: Client, message: Message):
 
     if not replied_message:
         return await message.reply_text(
-            "Reply to a proper NZB file to mirror.", quote=True
-        )
+            "Reply to a proper NZB file to mirror.", quote=True)
 
     replymsg = await message.reply_text(
-        "Adding your NZB file. Please Wait...", quote=True
-    )
+        "Adding your NZB file. Please Wait...", quote=True)
+    
     if not replied_message.document:
         return await replymsg.edit("Reply to a proper NZB file to mirror.")
 
@@ -176,8 +164,7 @@ async def grabid(client: Client, message: Message):
         return await message.reply_text("Please provide a proper ID.", quote=True)
 
     replymsg = await message.reply_text(
-        "Adding your requested ID(s). Please Wait...", quote=True
-    )
+        "Adding your requested ID(s). Please Wait...", quote=True)
 
     success_taskids = []
     for id in nzbhydra_idlist:
@@ -198,7 +185,6 @@ async def grabid(client: Client, message: Message):
 
         await replymsg.delete()
         return await message.reply_text(
-            f"{len(success_taskids)} Tasks have been successfully added.", quote=True
-        )
+            f"{len(success_taskids)} Tasks have been successfully added.", quote=True)
 
     return await replymsg.edit("No task has been added.")
