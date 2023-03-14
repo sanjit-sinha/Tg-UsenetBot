@@ -77,7 +77,7 @@ _____
 </div>
 
  
-<b><img src="https://graph.org/file/b077fae73ac7b1e487069.png" width="30"> SABNzbd post-processing script that automatically uploads completed download files to Google Drive and sends Telegram notifications once the file has been successfully uploaded with the drive link : https://github.com/sanjit-sinha/Tg-UsenetBot/blob/main/TelegramBot/usenetbot/postproc.py (edit according to your need)
+<b><img src="https://graph.org/file/b077fae73ac7b1e487069.png" width="30"> SABNzbd post-processing script that automatically uploads completed download files to Google Drive and sends Telegram notifications once the file has been successfully uploaded with the drive link : https://github.com/sanjit-sinha/Tg-UsenetBot/blob/main/TelegramBot/usenetbot/postproc.py (Edit according to your need. Give chmod +x authorization to script before using.)
 
 **[Sabnzbd installation](https://sabnzbd.org/wiki/installation/install-ubuntu-repo) ( Install it as a service to use rclone ) • [NZBHydra Installation](https://hotio.dev/containers/nzbhydra2/)**
 
@@ -87,7 +87,7 @@ Sabnzbd Settings -
 <br>
 `settings -> switches -> post-processing -> Tick Deobfuscate final filenames`
 <br>
-`settings -> sorting ->  Enable sortings [ Movie: %title (%y)/%fn.%ext   series: %sn/Season %s/%fn.%ext ]`
+`settings -> sorting ->  Enable sortings [ Movie: %title (%y)/%fn.%ext   series: %sn (%y)/Season %s/%fn.%ext ]`
 <br> 
  
 Docker Installation of Usenet Bot
