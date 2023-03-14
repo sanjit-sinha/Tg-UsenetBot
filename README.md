@@ -39,7 +39,7 @@ _____
 ____
 
 <div align="center">
-<h2><img src="https://graph.org/file/3ad54286db72e4ad3a7da.png" width="35"><b> Bot Commands and Usage</b></h2>
+<h2><b> Bot Commands and Usage</b></h2>
 </div>
 
 - `/status` - To see progress status with live update.
@@ -60,14 +60,15 @@ searching stuff -
 
  ( Few more commands `/start` `/help` `/ping` `/update` `/logs` )
  
- _____
+____
  
- ----
+<div align="center">
+<h2><b>Screenshots</b></h2>
+</div>
 
 ![](https://te.legra.ph/file/9316fc0e3e6d8da8a066c.jpg) | ![](https://te.legra.ph/file/40ffe2791139e7bcbea03.jpg) | ![](https://te.legra.ph/file/b2f025ce4a5967dd29168.jpg) |
 |----------------------------------------------------------|----------------------------------------------------------|----------------------------------------------------------|
 ![](https://te.legra.ph/file/7bffbfd8db669065b6252.jpg) | ![](https://te.legra.ph/file/503f8220837b56b133f52.jpg) | ![](https://te.legra.ph/file/4cf86a41b96c8d04e0708.jpg) |
-|----------------------------------------------------------|----------------------------------------------------------|----------------------------------------------------------|
 
 _____
  
@@ -76,10 +77,18 @@ _____
 </div>
 
  
-<b><img src="https://graph.org/file/b077fae73ac7b1e487069.png" width="30"> SABNzbd post-processing script that automatically uploads completed download files to Google Drive and sends Telegram notifications once the file has been successfully uploaded with the drive link : https://github.com/sanjit-sinha/Tg-UsenetBot/blob/main/TelegramBot/usenetbot/postproc.py
+<b><img src="https://graph.org/file/b077fae73ac7b1e487069.png" width="30"> SABNzbd post-processing script that automatically uploads completed download files to Google Drive and sends Telegram notifications once the file has been successfully uploaded with the drive link : https://github.com/sanjit-sinha/Tg-UsenetBot/blob/main/TelegramBot/usenetbot/postproc.py (edit according to your need)
+
+**[Sabnzbd installation](https://sabnzbd.org/wiki/installation/install-ubuntu-repo) ( Install it as a service to use rclone ) • [NZBHydra Installation](https://hotio.dev/containers/nzbhydra2/)**
+
+Sabnzbd Settings - 
  
-**[Sabnzbd installation](https://sabnzbd.org/wiki/installation/install-ubuntu-repo) • [NZBHydra Installation](https://hotio.dev/containers/nzbhydra2/)**
+`settings -> switches -> post-processing -> Untick Post-Process Only Verified Jobs `
 <br>
+`settings -> switches -> post-processing -> Tick Deobfuscate final filenames`
+<br>
+`settings -> sorting ->  Enable sortings [ Movie: %title (%y)/%fn.%ext   series: %sn/Season %s/%fn.%ext ]`
+<br> 
  
 Docker Installation of Usenet Bot
 
@@ -119,6 +128,6 @@ Any kind of feedback, bug reports, or contributions is greatly appreciated! :)
 <br>
   
 * copyright (C) 2023 by [Sanjit sinha](https://github.com/sanjit-sinha)
-* Licensed under the terms of the [The MIT License](https://github.com/sanjit-sinha/Telegram-Bot-Boilerplate/blob/main/LICENSE)
+* Licensed under the terms of the [The MIT License](https://github.com/sanjit-sinha/Tg-UsenetBot/blob/main/LICENSE)
 
 -------
