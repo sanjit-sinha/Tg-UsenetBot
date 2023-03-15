@@ -15,11 +15,11 @@ BotStartTime = time.time()
 
 
 # Checking Python version.
-if sys.version_info[0] < 3 or sys.version_info[1] < 7:
+if sys.version_info[0] < 3 or sys.version_info[1] < 8:
     LOGGER(__name__).critical(
         """
 =============================================================
-You MUST need to be on python 3.7 or above, shutting down the bot...
+You MUST need to be on python 3.8 or above, shutting down the bot...
 =============================================================
 """
     )
@@ -45,8 +45,7 @@ ____________________________________________________________________
 |    |_|\___|_|\___|\__, |_|  \__,_|_| |_| |_|____/ \___/ \__|     |
 |                    __/ |                                         |
 |__________________________________________________________________|
-"""
-)
+""")
 
 
 # Checking Sabnzbd configs.
@@ -57,8 +56,7 @@ try:
     response.raise_for_status()
 except:
     LOGGER(__name__).critical(
-        "Can not establish a successful connection with SABnzbd. Please double-check your configs and try again later."
-    )
+        "Can not establish a successful connection with SABnzbd. Please double-check your configs and try again later.")
     sys.exit(1)
 
 
@@ -66,11 +64,9 @@ except:
 LOGGER(__name__).info("Checking NZBHydra configs....")
 NZBHYDRA_ENDPOINT = f"http://{HYDRA_IP}:{HYDRA_PORT}/api?apikey={HYDRA_API_KEY}"
 NZBHYDRA_URL_ENDPOINT = (
-    f"http://{HYDRA_IP}:{HYDRA_PORT}/getnzb/api/replace_id?apikey={HYDRA_API_KEY}"
-)
+    f"http://{HYDRA_IP}:{HYDRA_PORT}/getnzb/api/replace_id?apikey={HYDRA_API_KEY}")
 NZBHYDRA_STATS_ENDPOINT = (
-    f"http://{HYDRA_IP}:{HYDRA_PORT}/api/stats?apikey={HYDRA_API_KEY}"
-)
+    f"http://{HYDRA_IP}:{HYDRA_PORT}/api/stats?apikey={HYDRA_API_KEY}")
 try:
     response = requests.get(NZBHYDRA_ENDPOINT, timeout=10)
     response.raise_for_status()
@@ -79,8 +75,7 @@ try:
 except Exception as error:
     print(error)
     LOGGER(__name__).critical(
-        "Can not establish a successful connection with NZBHydra. Please double-check your configs and try again later."
-    )
+        "Can not establish a successful connection with NZBHydra. Please double-check your configs and try again later.")
     sys.exit(1)
 
 
@@ -94,5 +89,8 @@ scheduler.start()
 LOGGER(__name__).info("initiating the client....")
 plugins = dict(root="TelegramBot/plugins")
 bot = Client(
-    "UsenetBot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN, plugins=plugins
-)
+    "UsenetBot",
+    api_id=API_ID,
+    api_hash=API_HASH,
+    bot_token=BOT_TOKEN,
+    plugins=plugins)
