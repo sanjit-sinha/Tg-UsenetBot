@@ -42,23 +42,26 @@ ____
 <h2><b> Bot Commands and Usage</b></h2>
 </div>
 
-- `/status` - To see progress status with live update.
-- `/stats` - Get  detail stats of Bot server.
-- `/pause` - Pause the given Taskid task.
-- `/resume` - Resume the given Taskid task.
-- `/cancel` - Delete the given Taskid task.
-- `/nzbmirror` - Reply to a .nzb file to add it in sabnzbd.
-- `/nzbgrab` or `/nzbadd` - Add multiple IDs which we get from search.
-- `/resumeall` `/pauseall` `/cancelall` (sudo commands)
+<pre>
+/status - To see progress status with live update.
+/stats - Get  detail stats of Bot server.
+/pause - Pause the given Taskid task.
+/resume - Resume the given Taskid task.
+/cancel - Delete the given Taskid task.
+/nzbmirror - Reply to a .nzb file to add it in sabnzbd.
+/nzbgrab or /nzbadd - Add multiple IDs which we get from search.
+/resumeall /pauseall /cancelall (sudo commands)
 
 searching stuff -
 
-- `/nzbfind`- Search your query.
-- `/movie` - Movie name / IMDB ID / IMDB link.
-- `/series` - Series Name / IMDB ID / IMDB link.
-- `/indexers` - List all your indexers. (sudo command)
+/nzbfind - Search your query.
+/movie - Movie name or IMDB ID or IMDB link.
+/series - Series Name or IMDB ID or IMDB link.
+/indexers - List all your indexers. (sudo command)
 
- ( Few more commands `/start` `/help` `/ping` `/update` `/logs` )
+(Few more commands -> /start /help /ping /update /logs)
+ 
+</pre>
  
 ____
  
