@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from logging.handlers import RotatingFileHandler
 import subprocess
 import requests
@@ -47,7 +49,7 @@ RCLONE_REMOTE_NAME = "usenet"
 RCLONE_DIRECTORY_NAME = "UsenetUpload"  # leave empty if there isn't one.
 DRIVE_UPLOAD_DIRECTORY = f"{RCLONE_REMOTE_NAME}:{RCLONE_DIRECTORY_NAME}{CURRENT_TASK_DIRECTORY}"
 
-rclone_command = f"rclone copy -v --stats=1s --stats-one-line --drive-chunk-size=256M --fast-list --transfers=1 --exclude _UNPACK_*/** --exclude _FAILED_*/** --exclude *.rar --exclude *.txt '{CURRENT_TASK_DIRECTORY}' '{DRIVE_UPLOAD_DIRECTORY}' "
+rclone_command = f"rclone copy -v --stats=1s --stats-one-line --drive-chunk-size=256M --fast-list --transfers=1 --exclude _UNPACK_*/** --exclude _FAILED_*/** --exclude *.rar '{CURRENT_TASK_DIRECTORY}' '{DRIVE_UPLOAD_DIRECTORY}' "
 
 # To show drive link in telegram notification.
 SHOW_DRIVE_LINK = True
