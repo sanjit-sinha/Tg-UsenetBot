@@ -38,18 +38,13 @@ NOTIFICATION_CHAT_ID = ""
 # log file path of sabnzbd log.
 LOGFILE_PATH = "/home/server/.sabnzbd/logs/sabnzbd.log"
 
-#Directory where all completed tasks are stored
-COMPLETED_TASK_DIRECTORY = "/home/server/Downloads/complete/"  # add "/" in last
-
-#Directiry where current task files exists. example: "Avengers Endgame (20XX)"
-CURRENT_TASK_DIRECTORY = COMPLETED_TASK_DIRECTORY + directory.split(COMPLETED_TASK_DIRECTORY)[-1].split("/")[0] 
-
 #Rclone upload directory and flags.  
 RCLONE_REMOTE_NAME = "usenet"
 RCLONE_DIRECTORY_NAME = "UsenetUpload"  # leave empty if there isn't one.
-DRIVE_UPLOAD_DIRECTORY = f"{RCLONE_REMOTE_NAME}:{RCLONE_DIRECTORY_NAME}{CURRENT_TASK_DIRECTORY}"
+RCLONE_UPLOAD_DIRECTORY = directory.split("/")[-1]
+DRIVE_UPLOAD_DIRECTORY = f"{RCLONE_REMOTE_NAME}:{RCLONE_DIRECTORY_NAME}/{RCLONE_UPLOAD_DIRECTORY}"
 
-rclone_command = f"rclone copy -v --stats=1s --stats-one-line --drive-chunk-size=256M --fast-list --transfers=1 --exclude _UNPACK_*/** --exclude _FAILED_*/** --exclude *.rar '{CURRENT_TASK_DIRECTORY}' '{DRIVE_UPLOAD_DIRECTORY}' "
+rclone_command = f"rclone copy -v --stats=1s --stats-one-line --drive-chunk-size=256M --fast-list --transfers=1 --exclude _UNPACK_*/** --exclude _FAILED_*/** --exclude *.rar '{directory}' '{DRIVE_UPLOAD_DIRECTORY}' "
 
 # To show drive link in telegram notification.
 SHOW_DRIVE_LINK = True
@@ -136,7 +131,7 @@ if str(postprocstatus) in reasons:
 run_command(rclone_command)
 
 # deleting file from local drive.
-shutil.rmtree(CURRENT_TASK_DIRECTORY)
+shutil.rmtree(directory)
 try:
     file_size = os.environ["SAB_BYTES_DOWNLOADED"]
     file_size = get_readable_bytes(int(file_size))
