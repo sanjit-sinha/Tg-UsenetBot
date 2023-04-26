@@ -5,23 +5,19 @@ from telegraph.aio import Telegraph
 
 async def katbin_paste(text: str) -> str:
     """
-    paste the text in katb.in website.
+    Paste the given text to katb.in website and returns the url of the paste.
     """
-
+    
     katbin_url = "https://katb.in/api/paste"
-    client = AsyncClient()
-    try:
-        paste_post = await client.post(
-            katbin_url,
-            json={"paste": {"content": f"{text}"}}).json()
-        
-        output_url = "https://katb.in/{}".format(paste_post["id"])
-        
-        await client.aclose()
-        return output_url
-    except:
-        return "something went wrong while pasting text in katb.in."
-
+    async with AsyncClient() as client:
+        try:
+            response = await client.post(katbin_url, json={"paste": {"content": "{}".format(text)}})
+            paste_id = response.json()["id"]
+            print("https://katb.in/{}".format(paste_id))
+        except Exception as e:
+            return "Something went wrong while pasting text in katb.in)
+            
+           
 
 async def telegraph_paste(content: str, title="UsenetBot") -> str:
     """
