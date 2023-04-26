@@ -19,13 +19,6 @@ Telegram UsenetBot is a bot that provides an easy and convenient way to track th
 | ![](https://te.legra.ph/file/5b001d5e030e35b2fb637.png) | ![](https://te.legra.ph/file/383068b3409d164167591.png)|
 |--------------------------------------------------------|--------------------------------------------------------|
 
-
-_____
-
-> **Note** Bot is in BETA currently. Better and detailed readme will be added later.
-> Join [Testing Group](https://t.me/+auLVb3tIJp8yOTU1) to test and help into identify more Bugs.
-> ( Group is not open for everyone, please only join if you have prior knowledge of using Usenet.)
-
 _____
 
 <div align="center">
@@ -118,9 +111,9 @@ sudo docker run usenetbot
 
 <br>
 
-Based on : https://github.com/sanjit-sinha/TelegramBot-Boilerplate
+Based on : <strong>https://github.com/sanjit-sinha/TelegramBot-Boilerplate</strong>
 
-<a href="https://t.me/abhieshekk"><strong>Abhishek</strong></a> and <a href="https://t.me/Mohitjoshi155"><strong>Mohitjoshi</strong></a> for helping out with usenet stuff.
+Thanks to <a href="https://t.me/abhieshekk"><strong>Abhishek</strong></a> and <a href="https://t.me/Mohitjoshi155"><strong>Mohitjoshi</strong></a> for helping out with usenet stuff.
  
 Any kind of feedback, bug reports, or contributions is greatly appreciated! :)
  
