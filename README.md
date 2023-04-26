@@ -84,7 +84,7 @@ Sabnzbd Settings -
 <br>
 `settings -> switches -> post-processing -> Tick Deobfuscate final filenames`
 <br>
-`settings -> sorting ->  Enable sortings [ Movie: %title (%y)/%fn.%ext   series: %sn (%y)/Season %s/%fn.%ext ]`
+`settings -> sorting ->  Enable sortings [ Movie:- %title (%y)/%dn.%ext  series:- %sn (%y)/Season %s/%dn.%ext ]`
 <br> 
  
 Docker Installation of Usenet Bot
