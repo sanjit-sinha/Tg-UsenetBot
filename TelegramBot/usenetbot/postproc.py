@@ -32,24 +32,31 @@ except:
 
 # Bot token of Telegram Usenet Bot
 BOT_TOKEN = ""
+
 # Chat Id of the group/channel to post Final Gdrive Link.
 NOTIFICATION_CHAT_ID = ""
 
 # log file path of sabnzbd log.
 LOGFILE_PATH = "/home/server/.sabnzbd/logs/sabnzbd.log"
 
-#Rclone upload directory and flags.  
-RCLONE_REMOTE_NAME = "usenet"
-RCLONE_DIRECTORY_NAME = "UsenetUpload"  # leave empty if there isn't one.
-RCLONE_UPLOAD_DIRECTORY = directory.split("/")[-1]
-DRIVE_UPLOAD_DIRECTORY = f"{RCLONE_REMOTE_NAME}:{RCLONE_DIRECTORY_NAME}/{RCLONE_UPLOAD_DIRECTORY}"
-
-rclone_command = f"rclone copy -v --stats=1s --stats-one-line --drive-chunk-size=256M --fast-list --transfers=1 --exclude _UNPACK_*/** --exclude _FAILED_*/** --exclude *.rar '{directory}' '{DRIVE_UPLOAD_DIRECTORY}' "
+#Directory where all completed tasks are stored (Add "/" in last)
+COMPLETED_TASK_DIRECTORY = "/home/server/Downloads/complete/"
 
 # To show drive link in telegram notification.
 SHOW_DRIVE_LINK = True
+
 # ==================================================================================
 
+#Rclone upload directory and flags.  
+RCLONE_REMOTE_NAME = "usenet:UsenetUpload"
+RCLONE_UPLOAD_DIRECTORY = directory.split(COMPLETED_TASK_DIRECTORY)[-1] 
+
+DRIVE_UPLOAD_DIRECTORY = f"{RCLONE_REMOTE_NAME}/{RCLONE_UPLOAD_DIRECTORY}"
+
+#Rclone command and flags
+rclone_command = f"rclone move -v --stats=1s --stats-one-line --drive-chunk-size=256M --fast-list --transfers=20 --exclude _UNPACK_*/** --exclude _FAILED_*/** --exclude *.rar '{directory}' '{DRIVE_UPLOAD_DIRECTORY}' "
+
+# ==================================================================================
 
 
 logging.basicConfig(
@@ -87,8 +94,7 @@ def telegram_notification(message: str):
         sys.exit(0)
 
     # if response is not successful
-    print(
-        "Either the bot_token is not valid or the bot is not allowed to send message in provided chat id.")
+    print("Either the bot_token is not valid or the bot is not allowed to send message in provided chat id.")
     sys.exit(1)
 
 
@@ -117,8 +123,7 @@ if re.search(r"(http|https)", jobname):
 reasons = {
     "1": "Failed verification",
     "2": "Failed unpack",
-    "3": "Failed unpack / verification",
-}
+    "3": "Failed unpack / verification"}
 
 
 if str(postprocstatus) in reasons:
@@ -131,7 +136,8 @@ if str(postprocstatus) in reasons:
 run_command(rclone_command)
 
 # deleting file from local drive.
-shutil.rmtree(directory)
+#shutil.rmtree(directory)
+
 try:
     file_size = os.environ["SAB_BYTES_DOWNLOADED"]
     file_size = get_readable_bytes(int(file_size))
