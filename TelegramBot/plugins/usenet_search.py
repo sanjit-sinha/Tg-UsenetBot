@@ -24,8 +24,6 @@ def errors(func: Callable) -> Callable:
 
 
 nzbhydra = NzbHydra()
-
-
 @Client.on_message(filters.command(["nzbfind", "nzbsearch", "movie", "series", "tv"]) & check_auth)
 @errors
 async def search(_, message: Message):
